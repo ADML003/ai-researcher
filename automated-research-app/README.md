@@ -1,33 +1,34 @@
 # Automated Research App
 
-An AI-powered user research system that generates user personas, conducts interviews, and synthesizes insights using LangGraph's multi-agent workflow. Built with FastAPI backend and Next.js frontend with a minimalist Apple-inspired design.
+An intelligent AI-powered user research system that generates user personas, conducts interviews, and synthesizes insights with professional formatting. Built with FastAPI backend and Next.js frontend featuring a comprehensive dashboard with research history storage.
 
 ## Features
 
-- 🧠 **AI-Powered Research**: Automated user persona generation and interviews
-- 🎯 **Multi-Agent Workflow**: Uses LangGraph for orchestrating research pipeline
+- 🧠 **Intelligent AI Research**: Advanced user persona generation and interviews with professional formatting
+- 📊 **Comprehensive Dashboard**: Complete research history tracking with SQLite storage
+- 🎯 **Professional Analysis**: Clean, readable research outputs without excessive formatting
+- 💾 **Local Database Storage**: SQLite-based persistence for all research sessions
+- 🔍 **LangSmith Integration**: Optional workflow monitoring and tracing
 - 🎨 **Apple-Inspired Design**: Clean, minimalist UI with light/dark mode
 - ⚡ **Fast Results**: Complete research insights in under 60 seconds
 - 🔄 **Real-time Processing**: Live updates during research workflow
-- 📊 **Comprehensive Reports**: Detailed personas, interviews, and synthesized insights
-
-## Tech Stack
 
 ### Backend
 
-- **FastAPI**: Modern, fast web framework
+- **FastAPI**: Modern, fast web framework with intelligent research endpoints
+- **SQLite**: Local database for research history and session storage
 - **LangChain**: LLM orchestration and tooling
 - **LangGraph**: Multi-agent workflow management
 - **Cerebras**: Ultra-fast LLM inference
-- **LangSmith**: Tracing and evaluation
+- **LangSmith**: Optional tracing and workflow monitoring
 
 ### Frontend
 
 - **Next.js 14**: React framework with App Router
 - **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first styling
+- **Tailwind CSS**: Utility-first styling with professional research formatting
 - **Lucide React**: Beautiful icons
-- **Apple-inspired Design**: Minimalist, modern UI
+- **Dashboard**: Comprehensive research analytics and history interface
 
 ## Prerequisites
 
@@ -35,25 +36,29 @@ An AI-powered user research system that generates user personas, conducts interv
 - Node.js 18+
 - npm or yarn
 - Cerebras API key
-- LangSmith API key (optional, for tracing)
+- LangSmith API key (optional, for monitoring)
 
-## Installation
+## Quick Start
 
-### 1. Clone and Setup
-
-```bash
-cd automated-research-app
-```
-
-### 2. Environment Configuration
-
-Copy the `.env` file and update the API keys:
+### Option 1: One-Command Start
 
 ```bash
-cp .env .env.local
+./start.sh
 ```
 
-Edit `.env` with your API keys:
+The unified start script will:
+
+- ✅ Check environment and dependencies
+- 📦 Install required packages automatically
+- 🧠 Start intelligent backend with database
+- 🎨 Launch frontend with dashboard
+- 🔍 Configure LangSmith integration (if provided)
+
+### Option 2: Manual Setup
+
+### 1. Environment Configuration
+
+Create `.env` file with your API keys:
 
 ```env
 # API Keys

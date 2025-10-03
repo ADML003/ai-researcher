@@ -49,6 +49,53 @@
     @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-xl;
   }
 
+  /* Professional Research Content Styling */
+  .research-content {
+    @apply leading-relaxed;
+  }
+
+  .research-content h1,
+  .research-content h2,
+  .research-content h3,
+  .research-content h4,
+  .research-content h5,
+  .research-content h6 {
+    @apply text-gray-900 dark:text-white font-medium mb-3 mt-6;
+  }
+
+  .research-content h1 {
+    @apply text-xl;
+  }
+
+  .research-content h2 {
+    @apply text-lg;
+  }
+
+  .research-content h3 {
+    @apply text-base;
+  }
+
+  .research-content p {
+    @apply text-gray-700 dark:text-gray-300 mb-3;
+  }
+
+  .research-content ul,
+  .research-content ol {
+    @apply mb-4 space-y-1;
+  }
+
+  .research-content li {
+    @apply text-gray-700 dark:text-gray-300 ml-4;
+  }
+
+  .research-content strong {
+    @apply text-gray-800 dark:text-gray-200 font-medium;
+  }
+
+  .research-content em {
+    @apply text-gray-600 dark:text-gray-400 italic;
+  }
+
   .glass-card {
     @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-xl;
   }

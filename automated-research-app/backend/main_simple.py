@@ -24,7 +24,7 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -45,77 +45,189 @@ class ResearchResponse(BaseModel):
 def generate_mock_research_data(research_question: str, target_demographic: str) -> Dict[str, Any]:
     """Generate mock research data for testing purposes"""
     
-    # Mock interview questions
-    questions = [
+    # Generate more dynamic interview questions based on the research question
+    question_templates = [
         f"What challenges do you face when dealing with {research_question.lower()}?",
         f"How do you currently approach {research_question.lower()}?",
-        f"What would an ideal solution look like for you?",
-        f"What tools or methods do you currently use?",
-        f"What frustrates you most about current solutions?"
+        f"What would an ideal solution look like for you regarding {research_question.lower()}?",
+        f"What tools or methods do you currently use for {research_question.lower()}?",
+        f"What frustrates you most about current approaches to {research_question.lower()}?"
     ]
     
-    # Mock personas
-    personas = [
-        {
-            "name": "Sarah Chen",
-            "age": 28,
-            "job": "Software Developer",
-            "traits": ["Detail-oriented", "Pragmatic", "Collaborative", "Tech-savvy"],
-            "communication_style": "Direct and concise",
-            "background": "5 years experience in web development"
-        },
-        {
-            "name": "Marcus Johnson",
-            "age": 35,
-            "job": "Product Manager",
-            "traits": ["Strategic", "User-focused", "Analytical", "Communicative"],
-            "communication_style": "Thoughtful and comprehensive",
-            "background": "Former developer turned PM with startup experience"
-        },
-        {
-            "name": "Elena Rodriguez",
-            "age": 42,
-            "job": "Senior Engineer",
-            "traits": ["Experienced", "Mentoring", "Quality-focused", "Systematic"],
-            "communication_style": "Measured and detailed",
-            "background": "15+ years in enterprise software development"
-        }
-    ]
+    # Generate dynamic personas based on target demographic
+    demographic_words = target_demographic.lower().split()
     
-    # Mock interviews
+    # Create different persona templates based on demographic
+    if "developer" in demographic_words or "engineer" in demographic_words:
+        persona_templates = [
+            {
+                "name": "Alex Kumar",
+                "age": 29,
+                "job": "Frontend Developer",
+                "traits": ["Innovative", "Detail-focused", "Collaborative", "Performance-minded"],
+                "communication_style": "Direct and solution-oriented",
+                "background": "6 years in modern web development with React and Node.js"
+            },
+            {
+                "name": "Jordan Martinez",
+                "age": 34,
+                "job": "Senior Backend Engineer",
+                "traits": ["Systematic", "Scalability-focused", "Mentoring", "Architecture-minded"],
+                "communication_style": "Technical and thorough",
+                "background": "10+ years in distributed systems and cloud architecture"
+            },
+            {
+                "name": "Taylor Kim",
+                "age": 26,
+                "job": "Full-Stack Developer",
+                "traits": ["Versatile", "Learning-oriented", "Agile", "User-focused"],
+                "communication_style": "Enthusiastic and exploratory",
+                "background": "4 years across frontend, backend, and DevOps"
+            }
+        ]
+    elif "manager" in demographic_words or "product" in demographic_words:
+        persona_templates = [
+            {
+                "name": "Riley Thompson",
+                "age": 38,
+                "job": "Product Manager",
+                "traits": ["Strategic", "Data-driven", "User-focused", "Cross-functional"],
+                "communication_style": "Analytical and comprehensive",
+                "background": "8 years leading product development in B2B SaaS"
+            },
+            {
+                "name": "Casey Chen",
+                "age": 31,
+                "job": "Technical Product Manager",
+                "traits": ["Bridge-builder", "Technical", "Priority-focused", "Stakeholder-minded"],
+                "communication_style": "Clear and prioritizing",
+                "background": "Former engineer with 5 years in product management"
+            },
+            {
+                "name": "Morgan Davis",
+                "age": 45,
+                "job": "VP of Product",
+                "traits": ["Visionary", "Market-focused", "Strategic", "Team-building"],
+                "communication_style": "High-level and forward-thinking",
+                "background": "15+ years scaling products from startup to enterprise"
+            }
+        ]
+    elif "chip" in demographic_words or "hardware" in demographic_words:
+        persona_templates = [
+            {
+                "name": "Dr. Sam Patel",
+                "age": 36,
+                "job": "Chip Design Engineer",
+                "traits": ["Precision-focused", "Innovation-driven", "Research-oriented", "Performance-minded"],
+                "communication_style": "Technical and detailed",
+                "background": "PhD in Electrical Engineering, 8 years in semiconductor design"
+            },
+            {
+                "name": "Jamie Liu",
+                "age": 41,
+                "job": "Hardware Product Manager",
+                "traits": ["Market-aware", "Technical-business bridge", "Roadmap-focused", "Partnership-oriented"],
+                "communication_style": "Strategic and market-focused",
+                "background": "12 years bridging hardware engineering and business strategy"
+            },
+            {
+                "name": "Avery Singh",
+                "age": 28,
+                "job": "AI Chip Architect",
+                "traits": ["Cutting-edge", "Algorithm-focused", "Optimization-minded", "Future-thinking"],
+                "communication_style": "Innovative and forward-looking",
+                "background": "5 years specializing in AI accelerator architectures"
+            }
+        ]
+    else:
+        # Generic personas for other demographics
+        persona_templates = [
+            {
+                "name": "River Johnson",
+                "age": 32,
+                "job": f"{target_demographic.title()} Specialist",
+                "traits": ["Experienced", "Methodical", "Results-oriented", "Collaborative"],
+                "communication_style": "Professional and thorough",
+                "background": f"7 years of experience in {target_demographic} field"
+            },
+            {
+                "name": "Phoenix Williams",
+                "age": 29,
+                "job": f"Senior {target_demographic.title()} Analyst",
+                "traits": ["Analytical", "Detail-oriented", "Problem-solving", "Innovation-focused"],
+                "communication_style": "Data-driven and precise",
+                "background": f"5 years analyzing trends in {target_demographic} sector"
+            },
+            {
+                "name": "Sage Brown",
+                "age": 37,
+                "job": f"{target_demographic.title()} Consultant",
+                "traits": ["Advisory", "Strategic", "Client-focused", "Solution-oriented"],
+                "communication_style": "Consultative and insightful",
+                "background": f"10+ years consulting in {target_demographic} industry"
+            }
+        ]
+    
+    # Use the appropriate persona templates
+    personas = persona_templates
+    questions = question_templates
+    
+    # Generate dynamic responses based on research context
+    response_templates = {
+        "challenges": [
+            f"The biggest challenge with {research_question.lower()} is the complexity and rapidly evolving landscape.",
+            f"We struggle with implementation inconsistencies when dealing with {research_question.lower()}.",
+            f"The main issue is lack of standardized approaches for {research_question.lower()}.",
+            f"Resource constraints and time pressures make {research_question.lower()} particularly challenging."
+        ],
+        "approaches": [
+            f"We take a systematic approach to {research_question.lower()}, starting with research and planning.",
+            f"Our current method for {research_question.lower()} involves iterative testing and validation.",
+            f"We approach {research_question.lower()} through cross-functional collaboration and regular reviews.",
+            f"Our strategy focuses on best practices and proven methodologies for {research_question.lower()}."
+        ],
+        "ideal_solutions": [
+            f"An ideal solution for {research_question.lower()} would be unified, well-documented, and scalable.",
+            f"The perfect approach would seamlessly integrate with existing workflows and tools.",
+            f"We'd want something that provides clear guidance and reduces complexity around {research_question.lower()}.",
+            f"An optimal solution would offer flexibility while maintaining consistency and reliability."
+        ],
+        "tools": [
+            f"We use a combination of specialized tools and platforms for {research_question.lower()}.",
+            f"Our toolkit includes both commercial solutions and open-source alternatives.",
+            f"We rely on industry-standard tools augmented with custom solutions for {research_question.lower()}.",
+            f"Our approach combines established tools with emerging technologies in this space."
+        ],
+        "frustrations": [
+            f"The biggest frustration is the fragmented ecosystem around {research_question.lower()}.",
+            f"Poor documentation and lack of clear examples really impact our productivity.",
+            f"The rapid pace of change makes it hard to establish stable practices for {research_question.lower()}.",
+            f"Inconsistent APIs and poor integration between tools causes significant overhead."
+        ]
+    }
+    
+    # Mock interviews with dynamic responses
     interviews = []
     for i, persona in enumerate(personas):
         responses = []
         for j, question in enumerate(questions):
-            # Generate mock responses based on persona
-            if "Sarah" in persona["name"]:
-                answers = [
-                    "I usually spend a lot of time reading through documentation to understand the nuances.",
-                    "My current approach involves using multiple tools, but they don't integrate well.",
-                    "Something that just works out of the box with good defaults would be amazing.",
-                    "I primarily use VS Code extensions and online resources, but it's fragmented.",
-                    "The lack of clear examples and inconsistent APIs really slow me down."
-                ]
-            elif "Marcus" in persona["name"]:
-                answers = [
-                    "From a product perspective, the biggest challenge is aligning technical capabilities with user needs.",
-                    "I take a user-centered approach, starting with research and validation.",
-                    "A solution that balances developer experience with business requirements.",
-                    "We use analytics tools, user feedback platforms, and regular team retrospectives.",
-                    "The disconnect between what developers build and what users actually need."
-                ]
-            else:  # Elena
-                answers = [
-                    "After many years, I've learned that the main challenge is maintaining consistency at scale.",
-                    "I focus on establishing solid patterns and mentoring junior developers.",
-                    "A robust, well-documented system with clear architectural guidelines.",
-                    "I rely on proven methodologies, code reviews, and established best practices.",
-                    "Poor documentation and lack of standardization across teams frustrates me most."
-                ]
+            # Select appropriate response template based on question type
+            if "challenge" in question.lower():
+                answer = response_templates["challenges"][i % len(response_templates["challenges"])]
+            elif "approach" in question.lower():
+                answer = response_templates["approaches"][i % len(response_templates["approaches"])]
+            elif "ideal" in question.lower():
+                answer = response_templates["ideal_solutions"][i % len(response_templates["ideal_solutions"])]
+            elif "tools" in question.lower() or "methods" in question.lower():
+                answer = response_templates["tools"][i % len(response_templates["tools"])]
+            elif "frustrat" in question.lower():
+                answer = response_templates["frustrations"][i % len(response_templates["frustrations"])]
+            else:
+                answer = f"This is an important consideration for {research_question.lower()} in our field."
             
             responses.append({
                 "question": question,
-                "answer": answers[j % len(answers)]
+                "answer": answer
             })
         
         interviews.append({
@@ -128,54 +240,74 @@ def generate_mock_research_data(research_question: str, target_demographic: str)
             "responses": responses
         })
     
-    # Mock synthesis
-    synthesis = f"""
-## KEY THEMES
+    # Generate dynamic synthesis based on the research context
+    persona_names = [p["name"].split()[0] for p in personas]
+    
+    # Create themes based on research question keywords
+    if "chip" in research_question.lower() or "hardware" in research_question.lower():
+        themes = {
+            "primary": "**Technology Evolution & Performance**: Participants emphasized the rapid advancement in chip technology and its impact on AI capabilities.",
+            "secondary": "**Market Dynamics**: The competitive landscape and cost considerations significantly influence adoption decisions.",
+            "tertiary": "**Integration Challenges**: Balancing cutting-edge technology with practical implementation requirements."
+        }
+    elif "development" in research_question.lower() or "software" in research_question.lower():
+        themes = {
+            "primary": "**Tooling & Workflow**: Participants highlighted the importance of efficient development tools and streamlined processes.",
+            "secondary": "**Learning Curve**: Different experience levels require varying approaches to adoption and implementation.",
+            "tertiary": "**Integration & Compatibility**: Ensuring new solutions work well with existing systems and workflows."
+        }
+    else:
+        themes = {
+            "primary": "**Implementation Challenges**: Participants consistently mentioned difficulties in practical application and deployment.",
+            "secondary": "**Resource Requirements**: Time, budget, and skill constraints significantly impact decision-making.",
+            "tertiary": "**Standards & Best Practices**: The need for clear guidelines and proven methodologies emerged as a key theme."
+        }
+    
+    synthesis = f"""## KEY THEMES
 
-Based on our research about "{research_question}" among {target_demographic}, several clear patterns emerged:
+Based on our research about "{research_question}" among {target_demographic}, several important patterns emerged:
 
-**Documentation & Learning Curve**: All participants highlighted challenges with unclear or insufficient documentation. There's a consistent need for better examples and clearer explanations.
+{themes["primary"]}
 
-**Tool Integration**: Multiple participants mentioned struggles with fragmented tooling and poor integration between different solutions.
+{themes["secondary"]}
 
-**Experience Levels**: Different experience levels require different approaches - junior developers need more guidance, while senior developers value flexibility and control.
+{themes["tertiary"]}
 
 ## DIVERSE PERSPECTIVES
 
-**Developer Perspective (Sarah)**: Focuses on immediate productivity and getting tasks done efficiently. Values tools that "just work" with minimal configuration.
+**{persona_names[0]}'s Perspective ({personas[0]["job"]})**: {personas[0]["communication_style"]} approach with focus on {personas[0]["traits"][0].lower()} and {personas[0]["traits"][1].lower()} outcomes.
 
-**Product Perspective (Marcus)**: Emphasizes the balance between technical implementation and user value. Considers broader team and business impact.
+**{persona_names[1]}'s Perspective ({personas[1]["job"]})**: {personas[1]["communication_style"]} methodology emphasizing {personas[1]["traits"][0].lower()} and {personas[1]["traits"][1].lower()} considerations.
 
-**Senior Technical Perspective (Elena)**: Prioritizes long-term maintainability, consistency, and mentoring opportunities. Values proven patterns and architectural soundness.
+**{persona_names[2]}'s Perspective ({personas[2]["job"]})**: {personas[2]["communication_style"]} strategy prioritizing {personas[2]["traits"][0].lower()} and {personas[2]["traits"][1].lower()} factors.
 
 ## PAIN POINTS & OPPORTUNITIES
 
 **Major Pain Points**:
-- Inconsistent APIs and poor documentation
-- Fragmented tooling ecosystem  
-- Disconnect between different experience levels
-- Lack of clear best practices and examples
+- Complexity and fragmentation in current approaches to {research_question.lower()}
+- Limited resources and time constraints affecting implementation
+- Inconsistent standards and documentation across the {target_demographic} community
+- Integration challenges with existing tools and workflows
 
 **Key Opportunities**:
-- Unified documentation with real-world examples
-- Better tool integration and standardization
-- Mentoring and knowledge sharing platforms
-- Consistent APIs with good developer experience
+- Streamlined solutions that reduce complexity while maintaining flexibility
+- Better education and training resources for {target_demographic}
+- Improved collaboration and knowledge sharing within the community
+- Standardized approaches that can scale across different use cases
 
 ## ACTIONABLE RECOMMENDATIONS
 
-1. **Improve Documentation**: Create comprehensive guides with practical examples that address different experience levels
+1. **Simplify Implementation**: Develop more accessible solutions for {research_question.lower()} that don't sacrifice functionality for ease of use
 
-2. **Standardize Tooling**: Develop or promote integrated solutions that reduce fragmentation
+2. **Enhance Documentation**: Create comprehensive, example-driven resources that address different skill levels within {target_demographic}
 
-3. **Build Community**: Foster knowledge sharing between different experience levels through mentoring programs
+3. **Foster Community**: Build stronger networks for knowledge sharing and collaborative problem-solving
 
-4. **Focus on DX**: Prioritize developer experience in API design and tool development
+4. **Standardize Practices**: Establish clear best practices and guidelines that can be widely adopted
 
-5. **Regular Feedback Loops**: Establish ongoing user research to continuously improve based on real usage patterns
+5. **Continuous Improvement**: Implement feedback loops to ensure solutions evolve with changing needs and technologies
 
-These insights suggest that success in this area requires balancing immediate usability with long-term scalability while addressing the needs of diverse user groups.
-"""
+These insights highlight the need for balanced approaches that address both immediate practical concerns and long-term strategic goals within the {target_demographic} community."""
     
     return {
         "research_question": research_question,

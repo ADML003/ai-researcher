@@ -1,101 +1,201 @@
 #!/bin/bash
 
-# Automated Research App Startup Script
+# Unified Startup Script for Automated Research App
+# Supports: Intelligent Backend, Dashboard, LangSmith Integration
 
-echo "🚀 Starting Automated Research App..."
+echo "🚀 Automated Research App - Intelligent Research System"
+echo "====================================================="
 
-# Check if .env file exists
-if [ ! -f ".env" ]; then
-    echo "❌ .env file not found. Please create it from .env.example and add your API keys."
-    exit 1
-fi
+# Navigate to app directory
+cd "$(dirname "$0")"
 
-# Function to check if a port is in use
-check_port() {
-    if lsof -Pi :$1 -sTCP:LISTEN -t >/dev/null 2>&1 ; then
-        echo "⚠️  Port $1 is already in use"
-        return 1
-    else
-        return 0
-    fi
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to print colored output
+print_status() {
+    local color=$1
+    local message=$2
+    echo -e "${color}${message}${NC}"
 }
-
-# Check required ports
-if ! check_port 8000; then
-    echo "⚠️ Backend port 8000 is in use. Attempting to stop existing service..."
-    pkill -f "python.*main_simple.py" 2>/dev/null || true
-    sleep 2
-fi
-
-if ! check_port 3000; then
-    echo "⚠️ Frontend port 3000 is in use. Attempting to stop existing service..."
-    pkill -f "next.*dev" 2>/dev/null || true
-    sleep 2
-fi
-
-# Start backend
-echo "🔧 Starting backend server..."
-cd backend
-
-# Check if FastAPI is available in system Python
-if ! python3 -c "import fastapi" 2>/dev/null; then
-    echo "� Installing FastAPI..."
-    pip3 install fastapi uvicorn python-dotenv
-fi
-
-# Start backend in background
-echo "🌐 Starting FastAPI backend on port 8000..."
-python3 main_simple.py &
-BACKEND_PID=$!
-
-# Give backend time to start
-sleep 3
-
-# Check if backend started successfully
-if curl -s http://localhost:8000/health > /dev/null 2>&1; then
-    echo "✅ Backend started successfully"
-else
-    echo "❌ Backend failed to start"
-    kill $BACKEND_PID 2>/dev/null
-    exit 1
-fi
-
-# Start frontend
-echo "🎨 Starting frontend server..."
-cd ../frontend
-
-# Check if node_modules exists
-if [ ! -d "node_modules" ]; then
-    echo "📦 Installing frontend dependencies..."
-    npm install
-fi
-
-# Start frontend
-echo "🌐 Starting Next.js frontend on port 3000..."
-npm run dev &
-FRONTEND_PID=$!
 
 # Function to cleanup on exit
 cleanup() {
-    echo "🛑 Shutting down services..."
-    kill $BACKEND_PID 2>/dev/null
-    kill $FRONTEND_PID 2>/dev/null
-    echo "✅ Services stopped"
+    print_status $YELLOW "🛑 Shutting down services..."
+    # Kill backend
+    if [ ! -z "$BACKEND_PID" ]; then
+        kill $BACKEND_PID 2>/dev/null
+    fi
+    # Kill frontend
+    if [ ! -z "$FRONTEND_PID" ]; then
+        kill $FRONTEND_PID 2>/dev/null
+    fi
+    # Kill by port as backup
+    pkill -f "python.*main_intelligent.py" 2>/dev/null || true
+    pkill -f "npm.*dev" 2>/dev/null || true
+    lsof -ti:8000 | xargs kill -9 2>/dev/null || true
+    lsof -ti:3000 | xargs kill -9 2>/dev/null || true
     exit 0
 }
 
-# Trap Ctrl+C and cleanup
-trap cleanup SIGINT
+# Set trap for cleanup
+trap cleanup SIGINT SIGTERM
+
+# Stop any existing services
+print_status $YELLOW "🛑 Stopping existing services..."
+pkill -f "python.*main_intelligent.py" 2>/dev/null || true
+pkill -f "npm.*dev" 2>/dev/null || true
+lsof -ti:8000 | xargs kill -9 2>/dev/null || true
+lsof -ti:3000 | xargs kill -9 2>/dev/null || true
+sleep 2
+
+# Check environment
+print_status $BLUE "🔍 Checking environment..."
+
+if [ ! -f ".env" ]; then
+    print_status $YELLOW "⚠️  .env file not found. Creating from template..."
+    if [ -f ".env.example" ]; then
+        cp .env.example .env
+        print_status $YELLOW "📝 Please edit .env file and add your API keys"
+    else
+        print_status $RED "❌ No .env.example found!"
+        exit 1
+    fi
+fi
+
+if ! command -v python3 &> /dev/null; then
+    print_status $RED "❌ Python3 is required but not installed"
+    exit 1
+fi
+
+if ! command -v node &> /dev/null; then
+    print_status $RED "❌ Node.js is required but not installed"
+    exit 1
+fi
+
+print_status $GREEN "✅ Environment check passed"
+
+# Setup backend
+print_status $BLUE "🔧 Setting up backend..."
+cd backend
+
+if [ ! -d "venv" ]; then
+    print_status $YELLOW "📦 Creating virtual environment..."
+    python3 -m venv venv
+fi
+
+source venv/bin/activate
+
+if [ -f "requirements.txt" ]; then
+    print_status $YELLOW "📦 Installing Python dependencies..."
+    pip install -r requirements.txt --quiet
+fi
+
+print_status $GREEN "✅ Backend setup complete"
+
+# Start backend
+print_status $BLUE "🧠 Starting intelligent backend..."
+if [ ! -f "main_intelligent.py" ]; then
+    print_status $RED "❌ main_intelligent.py not found!"
+    exit 1
+fi
+
+python main_intelligent.py &
+BACKEND_PID=$!
+cd ..
+
+# Wait for backend to start
+print_status $YELLOW "⏳ Waiting for backend to start..."
+sleep 5
+
+# Check if backend is running
+for i in {1..10}; do
+    if curl -s http://localhost:8000/health > /dev/null 2>&1; then
+        print_status $GREEN "✅ Backend started successfully on http://localhost:8000"
+        break
+    fi
+    if [ $i -eq 10 ]; then
+        print_status $RED "❌ Backend failed to start after 10 attempts"
+        cleanup
+        exit 1
+    fi
+    sleep 2
+done
+
+# Setup frontend
+print_status $BLUE "🎨 Setting up frontend..."
+cd frontend
+
+if [ ! -d "node_modules" ]; then
+    print_status $YELLOW "📦 Installing Node.js dependencies..."
+    npm install --silent
+fi
+
+print_status $GREEN "✅ Frontend setup complete"
+
+# Start frontend
+print_status $BLUE "🎨 Starting frontend..."
+npm run dev &
+FRONTEND_PID=$!
+cd ..
+
+# Wait for frontend to start
+print_status $YELLOW "⏳ Waiting for frontend to start..."
+sleep 8
+
+# Check if frontend is running
+FRONTEND_URL=""
+if curl -s http://localhost:3000 > /dev/null 2>&1; then
+    print_status $GREEN "✅ Frontend started successfully on http://localhost:3000"
+    FRONTEND_URL="http://localhost:3000"
+elif curl -s http://localhost:3001 > /dev/null 2>&1; then
+    print_status $YELLOW "⚠️  Frontend started on port 3001 (port 3000 was in use)"
+    FRONTEND_URL="http://localhost:3001"
+else
+    print_status $RED "❌ Frontend failed to start"
+    cleanup
+    exit 1
+fi
+
+# Final status
+print_status $GREEN "🎉 Automated Research App is running!"
+echo ""
+print_status $BLUE "📍 Available Services:"
+print_status $GREEN "   🎨 Main App: $FRONTEND_URL"
+print_status $GREEN "   📊 Dashboard: $FRONTEND_URL/dashboard"
+print_status $GREEN "   🧠 API: http://localhost:8000"
+print_status $GREEN "   📋 API Docs: http://localhost:8000/docs"
+print_status $GREEN "   💚 Health: http://localhost:8000/health"
 
 echo ""
-echo "✅ Services started successfully!"
-echo ""
-echo "📊 Backend API: http://localhost:8000"
-echo "🎨 Frontend App: http://localhost:3000"
-echo "📚 API Docs: http://localhost:8000/docs"
-echo ""
-echo "Press Ctrl+C to stop all services"
-echo ""
+print_status $BLUE "✨ Features Available:"
+print_status $GREEN "   🧠 AI-Powered Research with Intelligent Personas"
+print_status $GREEN "   📊 Comprehensive Dashboard with Research History"
+print_status $GREEN "   💾 Local Database Storage (SQLite)"
+print_status $GREEN "   🔍 LangSmith Integration (if configured)"
+print_status $GREEN "   🎯 Professional Research Analysis"
 
-# Wait for services
-wait
+echo ""
+print_status $YELLOW "📝 Quick Start:"
+print_status $YELLOW "   1. Open $FRONTEND_URL and create a research question"
+print_status $YELLOW "   2. View results and analysis"
+print_status $YELLOW "   3. Check the dashboard for research history"
+
+echo ""
+print_status $BLUE "� To stop: Press Ctrl+C"
+
+# Keep script running and monitor services
+while true; do
+    sleep 10
+    # Quick health check
+    if ! curl -s http://localhost:8000/health > /dev/null 2>&1; then
+        print_status $RED "❌ Backend stopped unexpectedly"
+        break
+    fi
+done
+
+cleanup

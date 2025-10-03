@@ -9,4 +9,3 @@ langchain-openai>=0.1.0
 cerebras-cloud-sdk==1.0.0
 langchain-cerebras>=0.1.0
 langsmith>=0.1.0
-fastapi-cors==0.0.6
