@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 import logging
 import json
 import random
-import sqlite3
 from datetime import datetime
 from langsmith import Client
+from database import get_db_connection, init_database
 
 # Load environment variables
 load_dotenv()
@@ -28,57 +28,7 @@ else:
     langsmith_client = None
     logger.warning("LangSmith API key not found. Tracing disabled.")
 
-# Initialize SQLite database for research history
-def init_database():
-    conn = sqlite3.connect('research_history.db')
-    cursor = conn.cursor()
-    
-    # Create research sessions table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS research_sessions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            session_id TEXT UNIQUE,
-            research_question TEXT,
-            target_demographic TEXT,
-            num_interviews INTEGER,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            synthesis TEXT,
-            status TEXT DEFAULT 'completed'
-        )
-    ''')
-    
-    # Create personas table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS personas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            session_id TEXT,
-            name TEXT,
-            age INTEGER,
-            job TEXT,
-            traits TEXT,
-            background TEXT,
-            communication_style TEXT,
-            FOREIGN KEY (session_id) REFERENCES research_sessions (session_id)
-        )
-    ''')
-    
-    # Create interviews table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS interviews (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            session_id TEXT,
-            persona_name TEXT,
-            question TEXT,
-            answer TEXT,
-            question_order INTEGER,
-            FOREIGN KEY (session_id) REFERENCES research_sessions (session_id)
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
-
-# Initialize database
+# Initialize database using the new database manager
 init_database()
 
 app = FastAPI(
@@ -180,8 +130,8 @@ def generate_intelligent_mock_response(prompt: str) -> str:
 def store_research_session(session_id: str, request: 'ResearchRequest', result: dict):
     """Store research session in database for dashboard"""
     try:
-        conn = sqlite3.connect('research_history.db')
-        cursor = conn.cursor()
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
         
         # Store main session
         cursor.execute('''
@@ -228,8 +178,7 @@ def store_research_session(session_id: str, request: 'ResearchRequest', result: 
                     i + 1
                 ))
         
-        conn.commit()
-        conn.close()
+            conn.commit()
         logger.info(f"Stored research session {session_id} in database")
         
     except Exception as e:
@@ -649,8 +598,8 @@ async def health_check():
 async def get_dashboard_stats():
     """Get dashboard statistics"""
     try:
-        conn = sqlite3.connect('research_history.db')
-        cursor = conn.cursor()
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
         
         # Get total research sessions
         cursor.execute("SELECT COUNT(*) FROM research_sessions")
@@ -681,8 +630,6 @@ async def get_dashboard_stats():
             for row in cursor.fetchall()
         ]
         
-        conn.close()
-        
         return {
             "total_sessions": total_sessions,
             "total_personas": total_personas,
@@ -703,8 +650,8 @@ async def get_dashboard_stats():
 async def get_research_sessions():
     """Get all research sessions for dashboard"""
     try:
-        conn = sqlite3.connect('research_history.db')
-        cursor = conn.cursor()
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
         
         cursor.execute("""
             SELECT session_id, research_question, target_demographic, 
