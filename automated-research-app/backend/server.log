@@ -1,0 +1,67 @@
+INFO:__main__:LangSmith integration enabled with project: automated-research-app
+INFO:database:Initializing postgresql database...
+INFO:database:Database initialization completed successfully
+INFO:     Started server process [99050]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:60677 - "GET /health HTTP/1.1" 200 OK
+INFO:__main__:Starting intelligent research for: Test research for data persistence
+INFO:__main__:Target demographic: test users
+INFO:__main__:Session ID: research_20251003_213911_1666
+INFO:workflow_tracker:Started step: Research Setup
+INFO:workflow_tracker:Completed step: Research Setup (0ms)
+INFO:workflow_tracker:Started step: Question Generation
+INFO:workflow_tracker:Started step: Analyze Research Goals
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Analyze Research Goals (1005ms)
+INFO:workflow_tracker:Started step: Generate Questions
+INFO:workflow_tracker:Completed step: Generate Questions (0ms)
+INFO:workflow_tracker:Completed step: Question Generation (1005ms)
+INFO:workflow_tracker:Started step: Persona Generation
+INFO:workflow_tracker:Started step: Analyze Demographics
+INFO:workflow_tracker:Completed step: Analyze Demographics (0ms)
+INFO:workflow_tracker:Started step: Generate Personas
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Generate Personas (388ms)
+INFO:workflow_tracker:Started step: Validate Personas
+INFO:workflow_tracker:Completed step: Validate Personas (0ms)
+INFO:workflow_tracker:Completed step: Persona Generation (388ms)
+INFO:workflow_tracker:Started step: Interview Simulation
+INFO:workflow_tracker:Started step: Interview Execution
+INFO:workflow_tracker:Started step: Interview Execution
+WARNING:__main__:Cerebras API error: 401
+WARNING:__main__:Cerebras API error: 401
+WARNING:__main__:Cerebras API error: 401
+WARNING:__main__:Cerebras API error: 401
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Interview Execution (1930ms)
+INFO:workflow_tracker:Started step: Response Collection
+INFO:workflow_tracker:Completed step: Response Collection (0ms)
+INFO:workflow_tracker:Completed step: Interview Simulation (1930ms)
+INFO:workflow_tracker:Started step: Data Analysis
+INFO:workflow_tracker:Started step: Response Processing
+INFO:workflow_tracker:Completed step: Response Processing (0ms)
+INFO:workflow_tracker:Started step: Pattern Recognition
+INFO:workflow_tracker:Completed step: Pattern Recognition (0ms)
+INFO:workflow_tracker:Started step: Insight Generation
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Insight Generation (385ms)
+INFO:workflow_tracker:Completed step: Data Analysis (386ms)
+INFO:workflow_tracker:Started step: Research Synthesis
+INFO:workflow_tracker:Started step: Key Findings
+INFO:workflow_tracker:Completed step: Key Findings (0ms)
+INFO:workflow_tracker:Started step: Recommendations
+INFO:workflow_tracker:Completed step: Recommendations (0ms)
+INFO:workflow_tracker:Started step: Report Generation
+INFO:workflow_tracker:Completed step: Report Generation (0ms)
+INFO:workflow_tracker:Completed step: Research Synthesis (0ms)
+INFO:__main__:Research completed successfully with 1 interviews
+INFO:workflow_tracker:Started step: Data Storage
+ERROR:__main__:Failed to store research session: cursor already closed
+INFO:workflow_tracker:Completed step: Data Storage (866ms)
+INFO:     127.0.0.1:60695 - "POST /research HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [99050]

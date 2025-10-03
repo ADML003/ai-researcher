@@ -1,0 +1,113 @@
+INFO:__main__:LangSmith integration enabled with project: automated-research-app
+INFO:database:Initializing postgresql database...
+INFO:database:Successfully applied database migration
+INFO:database:Successfully applied database migration
+INFO:database:Database initialization completed successfully
+INFO:     Started server process [20393]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:__main__:Starting intelligent research for: How do teams integrate AI tools into development workflows
+INFO:__main__:Target demographic: Software developers
+INFO:__main__:Session ID: research_20251003_222335_1139
+INFO:workflow_tracker:Started step: Research Setup
+INFO:workflow_tracker:Completed step: Research Setup (0ms)
+INFO:workflow_tracker:Started step: Question Generation
+INFO:workflow_tracker:Started step: Analyze Research Goals
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Analyze Research Goals (773ms)
+INFO:workflow_tracker:Started step: Generate Questions
+INFO:workflow_tracker:Completed step: Generate Questions (0ms)
+INFO:workflow_tracker:Completed step: Question Generation (773ms)
+INFO:workflow_tracker:Started step: Persona Generation
+INFO:workflow_tracker:Started step: Analyze Demographics
+INFO:workflow_tracker:Completed step: Analyze Demographics (0ms)
+INFO:workflow_tracker:Started step: Generate Personas
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Generate Personas (451ms)
+INFO:workflow_tracker:Started step: Validate Personas
+INFO:workflow_tracker:Completed step: Validate Personas (0ms)
+INFO:workflow_tracker:Completed step: Persona Generation (452ms)
+INFO:workflow_tracker:Started step: Interview Simulation
+INFO:workflow_tracker:Started step: Interview Execution
+INFO:workflow_tracker:Started step: Interview Execution
+WARNING:__main__:Cerebras API error: 401
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Interview Execution (869ms)
+INFO:workflow_tracker:Started step: Response Collection
+INFO:workflow_tracker:Completed step: Response Collection (0ms)
+INFO:workflow_tracker:Completed step: Interview Simulation (869ms)
+INFO:workflow_tracker:Started step: Data Analysis
+INFO:workflow_tracker:Started step: Response Processing
+INFO:workflow_tracker:Completed step: Response Processing (0ms)
+INFO:workflow_tracker:Started step: Pattern Recognition
+INFO:workflow_tracker:Completed step: Pattern Recognition (0ms)
+INFO:workflow_tracker:Started step: Insight Generation
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Insight Generation (565ms)
+INFO:workflow_tracker:Completed step: Data Analysis (565ms)
+INFO:workflow_tracker:Started step: Research Synthesis
+INFO:workflow_tracker:Started step: Key Findings
+INFO:workflow_tracker:Completed step: Key Findings (0ms)
+INFO:workflow_tracker:Started step: Recommendations
+INFO:workflow_tracker:Completed step: Recommendations (0ms)
+INFO:workflow_tracker:Started step: Report Generation
+INFO:workflow_tracker:Completed step: Report Generation (0ms)
+INFO:workflow_tracker:Completed step: Research Synthesis (0ms)
+INFO:__main__:Research completed successfully with 1 interviews
+INFO:workflow_tracker:Started step: Data Storage
+INFO:__main__:Stored research session research_20251003_222335_1139 in database
+INFO:workflow_tracker:Completed step: Data Storage (1348ms)
+INFO:     127.0.0.1:62026 - "POST /research HTTP/1.1" 200 OK
+INFO:__main__:Starting intelligent research for: How do teams integrate AI tools into development workflows
+INFO:__main__:Target demographic: Software developers
+INFO:__main__:Session ID: research_20251003_222403_1139
+INFO:workflow_tracker:Started step: Research Setup
+INFO:workflow_tracker:Completed step: Research Setup (0ms)
+INFO:workflow_tracker:Started step: Question Generation
+INFO:workflow_tracker:Started step: Analyze Research Goals
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Analyze Research Goals (402ms)
+INFO:workflow_tracker:Started step: Generate Questions
+INFO:workflow_tracker:Completed step: Generate Questions (0ms)
+INFO:workflow_tracker:Completed step: Question Generation (402ms)
+INFO:workflow_tracker:Started step: Persona Generation
+INFO:workflow_tracker:Started step: Analyze Demographics
+INFO:workflow_tracker:Completed step: Analyze Demographics (0ms)
+INFO:workflow_tracker:Started step: Generate Personas
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Generate Personas (397ms)
+INFO:workflow_tracker:Started step: Validate Personas
+INFO:workflow_tracker:Completed step: Validate Personas (0ms)
+INFO:workflow_tracker:Completed step: Persona Generation (398ms)
+INFO:workflow_tracker:Started step: Interview Simulation
+INFO:workflow_tracker:Started step: Interview Execution
+INFO:workflow_tracker:Started step: Interview Execution
+WARNING:__main__:Cerebras API error: 401
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Interview Execution (836ms)
+INFO:workflow_tracker:Started step: Response Collection
+INFO:workflow_tracker:Completed step: Response Collection (0ms)
+INFO:workflow_tracker:Completed step: Interview Simulation (836ms)
+INFO:workflow_tracker:Started step: Data Analysis
+INFO:workflow_tracker:Started step: Response Processing
+INFO:workflow_tracker:Completed step: Response Processing (0ms)
+INFO:workflow_tracker:Started step: Pattern Recognition
+INFO:workflow_tracker:Completed step: Pattern Recognition (0ms)
+INFO:workflow_tracker:Started step: Insight Generation
+WARNING:__main__:Cerebras API error: 401
+INFO:workflow_tracker:Completed step: Insight Generation (439ms)
+INFO:workflow_tracker:Completed step: Data Analysis (440ms)
+INFO:workflow_tracker:Started step: Research Synthesis
+INFO:workflow_tracker:Started step: Key Findings
+INFO:workflow_tracker:Completed step: Key Findings (0ms)
+INFO:workflow_tracker:Started step: Recommendations
+INFO:workflow_tracker:Completed step: Recommendations (0ms)
+INFO:workflow_tracker:Started step: Report Generation
+INFO:workflow_tracker:Completed step: Report Generation (0ms)
+INFO:workflow_tracker:Completed step: Research Synthesis (0ms)
+INFO:__main__:Research completed successfully with 1 interviews
+INFO:workflow_tracker:Started step: Data Storage
+INFO:__main__:Stored research session research_20251003_222403_1139 in database
+INFO:workflow_tracker:Completed step: Data Storage (1172ms)
+INFO:     127.0.0.1:62042 - "POST /research HTTP/1.1" 200 OK
