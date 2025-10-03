@@ -308,35 +308,91 @@ def generate_smart_questions(topic: str) -> str:
     return "\n".join(base_questions[:5])
 
 def generate_smart_personas(demographic: str) -> str:
-    """Generate demographic-appropriate personas - concise format"""
+    """Generate demographic-appropriate personas - minimal format"""
     demographic_lower = demographic.lower()
     
-    # Generate personas based on demographic
-    if "developer" in demographic_lower or "engineer" in demographic_lower:
+    # Generate simple personas based on demographic
+    if "farmer" in demographic_lower:
+        personas = [
+            {
+                "name": "John Martinez",
+                "age": 45,
+                "job": "Corn Farmer",
+                "traits": ["practical", "experienced"],
+                "communication_style": "straightforward",
+                "background": "20 years farming"
+            },
+            {
+                "name": "Sarah Johnson", 
+                "age": 38,
+                "job": "Organic Farmer",
+                "traits": ["health-conscious", "careful"],
+                "communication_style": "detailed",
+                "background": "15 years organic methods"
+            },
+            {
+                "name": "Mike Thompson",
+                "age": 52,
+                "job": "Livestock Farmer", 
+                "traits": ["traditional", "cautious"],
+                "communication_style": "conservative",
+                "background": "25 years livestock"
+            }
+        ]
+    
+    elif "bioscientist" in demographic_lower or "scientist" in demographic_lower:
+        personas = [
+            {
+                "name": "Dr. Emily Chen",
+                "age": 34,
+                "job": "Agricultural Scientist",
+                "traits": ["research-focused", "analytical"],
+                "communication_style": "scientific",
+                "background": "PhD in Plant Biology"
+            },
+            {
+                "name": "Dr. Robert Kim", 
+                "age": 41,
+                "job": "Toxicologist",
+                "traits": ["safety-oriented", "methodical"],
+                "communication_style": "precise",
+                "background": "Environmental safety expert"
+            },
+            {
+                "name": "Lisa Rodriguez",
+                "age": 29,
+                "job": "Research Biologist",
+                "traits": ["innovative", "curious"],
+                "communication_style": "enthusiastic",
+                "background": "Studying pest resistance"
+            }
+        ]
+    
+    elif "developer" in demographic_lower or "engineer" in demographic_lower:
         personas = [
             {
                 "name": "Jordan Kim",
                 "age": 29,
-                "job": "Senior Software Engineer",
-                "traits": ["analytical", "detail-oriented", "innovative"],
-                "communication_style": "direct and technical",
-                "background": "7 years full-stack experience"
+                "job": "Software Engineer",
+                "traits": ["analytical", "efficient"],
+                "communication_style": "direct",
+                "background": "7 years experience"
             },
             {
                 "name": "Alex Rivera", 
                 "age": 34,
                 "job": "Lead Developer",
-                "traits": ["systematic", "mentoring-focused", "quality-driven"],
-                "communication_style": "thoughtful and comprehensive",
-                "background": "10+ years team leadership"
+                "traits": ["systematic", "experienced"],
+                "communication_style": "thoughtful",
+                "background": "10+ years leadership"
             },
             {
                 "name": "Casey Chen",
                 "age": 26,
                 "job": "Frontend Developer", 
-                "traits": ["creative", "user-focused", "adaptable"],
-                "communication_style": "enthusiastic and visual",
-                "background": "4 years modern web frameworks"
+                "traits": ["creative", "user-focused"],
+                "communication_style": "visual",
+                "background": "4 years experience"
             }
         ]
     
@@ -346,24 +402,24 @@ def generate_smart_personas(demographic: str) -> str:
                 "name": "Dr. Sarah Patel",
                 "age": 37,
                 "job": "Chip Design Engineer",
-                "traits": ["precision-focused", "research-oriented", "innovative"],
-                "communication_style": "technical and detailed",
+                "traits": ["precision-focused", "innovative"],
+                "communication_style": "technical",
                 "background": "PhD EE, 12 years semiconductor"
             },
             {
                 "name": "Marcus Liu",
                 "age": 31,
                 "job": "Hardware Product Manager",
-                "traits": ["market-aware", "strategic", "analytical"],
-                "communication_style": "business-focused and clear",
+                "traits": ["strategic", "analytical"],
+                "communication_style": "business-focused",
                 "background": "8 years hardware business"
             },
             {
                 "name": "Elena Singh",
                 "age": 28,
                 "job": "AI Chip Architect",
-                "traits": ["cutting-edge", "optimization-minded", "forward-thinking"],
-                "communication_style": "innovative and future-oriented",
+                "traits": ["optimization-minded", "forward-thinking"],
+                "communication_style": "innovative",
                 "background": "5 years AI accelerators"
             }
         ]
@@ -374,24 +430,24 @@ def generate_smart_personas(demographic: str) -> str:
                 "name": "Taylor Johnson",
                 "age": 35,
                 "job": "Product Manager",
-                "traits": ["user-focused", "data-driven", "strategic"],
-                "communication_style": "analytical and user-centered",
-                "background": "8 years B2B/consumer products"
+                "traits": ["user-focused", "strategic"],
+                "communication_style": "analytical",
+                "background": "8 years B2B products"
             },
             {
                 "name": "Morgan Davis",
                 "age": 41,
                 "job": "Senior Product Manager",
-                "traits": ["experienced", "stakeholder-focused", "decisive"],
-                "communication_style": "clear and prioritizing",
-                "background": "12+ years product scaling"
+                "traits": ["experienced", "decisive"],
+                "communication_style": "clear",
+                "background": "12+ years scaling"
             },
             {
                 "name": "River Williams",
                 "age": 33,
                 "job": "Technical Product Manager",
-                "traits": ["bridge-builder", "technical", "collaborative"],
-                "communication_style": "technical yet accessible",
+                "traits": ["technical", "collaborative"],
+                "communication_style": "accessible",
                 "background": "Former engineer, 6 years PM"
             }
         ]
@@ -403,25 +459,25 @@ def generate_smart_personas(demographic: str) -> str:
                 "name": "Jamie Rodriguez",
                 "age": 32,
                 "job": f"{demographic.title()} Specialist",
-                "traits": ["experienced", "methodical", "results-oriented"],
-                "communication_style": "professional and thorough",
-                "background": f"8 years {demographic} expertise"
+                "traits": ["experienced", "methodical"],
+                "communication_style": "professional",
+                "background": f"8 years {demographic}"
             },
             {
                 "name": "Sam Thompson",
                 "age": 29,
-                "job": f"Senior {demographic.title()} Analyst",
-                "traits": ["analytical", "detail-oriented", "innovative"],
-                "communication_style": "data-driven and precise",
-                "background": f"6 years {demographic} analysis"
+                "job": f"Senior {demographic.title()}",
+                "traits": ["analytical", "innovative"],
+                "communication_style": "data-driven",
+                "background": f"6 years experience"
             },
             {
                 "name": "Avery Brown",
                 "age": 36,
                 "job": f"{demographic.title()} Consultant",
-                "traits": ["advisory", "strategic", "solution-oriented"],
-                "communication_style": "consultative and insightful",
-                "background": f"10+ years {demographic} consulting"
+                "traits": ["strategic", "solution-oriented"],
+                "communication_style": "consultative",
+                "background": f"10+ years consulting"
             }
         ]
     
@@ -437,8 +493,46 @@ def generate_clean_interview_response(persona: dict, question: str) -> str:
     question_lower = question.lower()
     job_lower = job.lower()
     
-    # Generate contextual responses based on question topic and persona job
-    if "ai" in question_lower and "workflow" in question_lower:
+    # Topic-specific responses for pesticides/farming
+    if "pesticide" in question_lower or "farming" in question_lower:
+        if "farmer" in job_lower:
+            if "decide" in question_lower and "use" in question_lower:
+                return "I look at pest pressure indicators and weather forecasts. If I see early signs of disease or pests above threshold levels, I'll apply targeted treatments. I also follow my crop rotation schedule and integrated pest management plan."
+            elif "alternative" in question_lower:
+                return "I've tried beneficial insects for aphid control and cover crops to improve soil health. Crop rotation helps break pest cycles. The challenge is that organic methods often require more time and labor than conventional approaches."
+            elif "balance" in question_lower and "yield" in question_lower:
+                return "It's always a tough call. Lost crops mean lost income, but I'm concerned about soil health and water quality. I try to use the minimum effective dose and rotate between different pesticide classes to prevent resistance."
+            elif "information" in question_lower and "trust" in question_lower:
+                return "I rely on our county extension agent, other farmers in my area, and industry publications. I'm skeptical of purely marketing materials but trust university research and field trial data."
+            elif "changed" in question_lower and "years" in question_lower:
+                return "I've reduced overall pesticide use by about 20% through better timing and targeted applications. GPS-guided sprayers help with precision, and soil testing helps me understand what my fields actually need."
+        
+        elif "scientist" in job_lower or "bioscientist" in job_lower:
+            if "decide" in question_lower and "use" in question_lower:
+                return "From a research perspective, pesticide decisions should be based on economic thresholds, pest identification, and resistance management strategies. We recommend scouting protocols and evidence-based decision trees."
+            elif "alternative" in question_lower:
+                return "Our research focuses on biological control agents, resistant crop varieties, and precision application technologies. Pheromone traps, beneficial microorganisms, and CRISPR-edited resistant plants show promise."
+            elif "balance" in question_lower and "yield" in question_lower:
+                return "This is a systems-level challenge. Our models show that sustainable practices can maintain yields over time while preserving ecosystem services. Short-term yield losses may be offset by long-term sustainability benefits."
+            elif "information" in question_lower and "trust" in question_lower:
+                return "Peer-reviewed research, long-term field studies, and regulatory assessment data are most reliable. Industry-funded studies need careful evaluation for bias, but academic collaborations can provide valuable insights."
+            elif "changed" in question_lower and "years" in question_lower:
+                return "Research priorities have shifted toward sustainable intensification. We're seeing more investment in precision agriculture, biological solutions, and integrated approaches that reduce chemical dependency."
+        
+        else:  # General public
+            if "decide" in question_lower and "use" in question_lower:
+                return "I choose organic produce when possible, especially for fruits and vegetables my family eats most. I read labels and research brands that prioritize sustainable farming practices."
+            elif "alternative" in question_lower:
+                return "I support local farmers who use sustainable practices and shop at farmers markets. I also grow some vegetables in my garden using organic methods like companion planting and natural pest deterrents."
+            elif "balance" in question_lower and "yield" in question_lower:
+                return "I think we need to prioritize long-term environmental health over maximum short-term yields. I'm willing to pay more for food that's produced sustainably, even if it means slightly higher grocery bills."
+            elif "information" in question_lower and "trust" in question_lower:
+                return "I trust environmental organizations, consumer advocacy groups, and independent research institutions. I'm skeptical of information directly from pesticide manufacturers or industry trade groups."
+            elif "changed" in question_lower and "years" in question_lower:
+                return "I've become much more conscious about pesticide residues in food. I wash produce more carefully and choose organic options for items on the 'dirty dozen' list when budget allows."
+    
+    # AI/Development responses (existing code)
+    elif "ai" in question_lower and "workflow" in question_lower:
         if "engineer" in job_lower or "developer" in job_lower:
             return "I primarily use AI for code completion and documentation. GitHub Copilot has been a game-changer for writing boilerplate code, and I use ChatGPT for explaining complex algorithms to team members."
         elif "senior" in job_lower or "lead" in job_lower:
@@ -522,7 +616,7 @@ def generate_contextual_interview_response(prompt: str) -> str:
     return random.choice(responses)
 
 def generate_smart_synthesis(prompt: str) -> str:
-    """Generate intelligent synthesis based on interview context"""
+    """Generate topic-specific synthesis based on research context"""
     # Extract research question and demographic if possible
     research_question = "the research topic"
     demographic = "the target demographic"
@@ -542,155 +636,154 @@ def generate_smart_synthesis(prompt: str) -> str:
                 demographic = line.split(':', 1)[1].strip()
                 break
     
-    synthesis = f"""# 🔍 COMPREHENSIVE RESEARCH ANALYSIS
+    # Generate topic-specific analysis based on the research question
+    research_lower = research_question.lower()
+    
+    if "pesticide" in research_lower or "farming" in research_lower:
+        synthesis = f"""# PESTICIDE USE IN FARMING - RESEARCH ANALYSIS
 
-## 📊 EXECUTIVE SUMMARY
+## EXECUTIVE SUMMARY
 
-This analysis examines user perspectives on "{research_question}" among {demographic}, revealing critical insights about current practices, challenges, and opportunities for improvement. The research identifies consistent patterns across different user segments while highlighting unique perspectives that inform strategic decision-making.
+This research examines perspectives on pesticide use in farming among farmers, bioscientists, and the general public. The study reveals complex attitudes balancing agricultural productivity needs with environmental and health concerns.
 
----
+## KEY FINDINGS FROM INTERVIEWS
 
-## 🎯 KEY THEMES & PATTERNS
+### Farmer Perspectives
+- **Necessity vs. Caution**: Farmers view pesticides as essential for crop protection but express growing concerns about long-term soil health
+- **Economic Pressure**: Cost of crop loss without pesticides often outweighs environmental concerns in decision-making
+- **Knowledge Gaps**: Many farmers desire better education on integrated pest management alternatives
+- **Regulatory Compliance**: Increasing regulations create both safety benefits and operational challenges
 
-### 🔧 Implementation & Technical Challenges
-- **Complexity Barriers**: Participants consistently emphasize the steep learning curve and implementation complexity
-- **Integration Difficulties**: Seamless integration with existing workflows emerges as a primary concern
-- **Performance Optimization**: Users prioritize solutions that balance functionality with system performance
-- **Scalability Requirements**: Long-term scalability considerations heavily influence adoption decisions
+### Scientific Community Views
+- **Evidence-Based Approach**: Bioscientists emphasize the importance of proper application rates and timing
+- **Environmental Impact**: Strong concern about pesticide effects on beneficial insects, soil microbiome, and water systems
+- **Innovation Focus**: Push for development of more targeted, biodegradable pesticide alternatives
+- **Risk Assessment**: Need for better long-term studies on cumulative environmental and health effects
 
-### 💰 Resource & Investment Considerations
-- **Time Constraints**: Limited time for evaluation, implementation, and team training
-- **Budget Limitations**: Cost-effectiveness and ROI calculations drive decision-making processes
-- **Skill Gap Management**: Need for upskilling teams and managing knowledge transfer
-- **Maintenance Overhead**: Ongoing support and maintenance resource requirements
+### Public Perception
+- **Health Concerns**: General public prioritizes food safety and environmental protection over yield optimization
+- **Information Disconnect**: Gap between scientific understanding and public perception of pesticide risks
+- **Organic Premium**: Willingness to pay more for pesticide-free produce varies significantly
+- **Trust Issues**: Skepticism about industry claims regarding pesticide safety
 
-### 🤝 Collaboration & Workflow Integration
-- **Cross-functional Alignment**: Importance of stakeholder buy-in across different teams
-- **Workflow Disruption**: Minimizing disruption to established processes and procedures
-- **Communication Protocols**: Clear documentation and communication standards
-- **Change Management**: Structured approach to organizational change and adoption
+## CRITICAL THEMES
 
----
+### Balancing Act
+All groups recognize the tension between food security and environmental protection. The challenge lies in finding sustainable solutions that address both concerns.
 
-## 👥 DIVERSE PERSPECTIVES ANALYSIS
+### Communication Gap
+Significant disconnect exists between scientific research, farmer practices, and public understanding of pesticide use and alternatives.
 
-### 🏗️ Technical Implementation Perspective
-**Focus Areas**: Architecture design, performance metrics, security considerations
-**Key Concerns**: Code quality, system reliability, technical debt management
-**Decision Drivers**: Proven methodologies, best practices, technical specifications
+### Innovation Needs
+Strong demand for technological solutions that reduce pesticide dependency while maintaining agricultural productivity.
 
-### 💼 Business Strategy Perspective
-**Focus Areas**: Market positioning, competitive advantage, customer value proposition
-**Key Concerns**: ROI justification, strategic alignment, stakeholder expectations
-**Decision Drivers**: Business impact, market trends, customer feedback
+## RECOMMENDATIONS
 
-### ⚙️ Operational Excellence Perspective
-**Focus Areas**: Process optimization, team productivity, operational efficiency
-**Key Concerns**: Implementation timelines, resource allocation, risk management
-**Decision Drivers**: Practical feasibility, team capabilities, operational impact
+1. **Enhanced Education Programs**: Develop comprehensive training for farmers on integrated pest management
+2. **Public Engagement**: Create transparent communication channels between scientists, farmers, and consumers
+3. **Research Investment**: Increase funding for sustainable agriculture and biological pest control methods
+4. **Policy Balance**: Develop regulations that protect health and environment while supporting agricultural viability
+5. **Technology Adoption**: Accelerate development and adoption of precision agriculture technologies"""
+    
+    elif "ai" in research_lower and "development" in research_lower:
+        synthesis = f"""# AI TOOLS IN SOFTWARE DEVELOPMENT - RESEARCH ANALYSIS
 
----
+## EXECUTIVE SUMMARY
 
-## 🚨 CRITICAL PAIN POINTS
+This research examines software developers' experiences with AI-powered development tools, revealing significant productivity gains alongside concerns about code quality and skill development.
 
-### 🔴 High-Impact Issues
-1. **Steep Learning Curves**: Complex implementation processes requiring significant time investment
-2. **Resource Constraints**: Limited budget, time, and skilled personnel for proper adoption
-3. **Integration Complexity**: Difficulty connecting with existing systems and workflows
-4. **Inconsistent Standards**: Lack of industry-wide best practices and standardization
+## KEY FINDINGS FROM DEVELOPER INTERVIEWS
 
-### 🟡 Medium-Impact Issues
-1. **Documentation Gaps**: Insufficient or unclear implementation guidance
-2. **Tool Fragmentation**: Multiple disparate tools without cohesive integration
-3. **Performance Concerns**: Uncertainty about system impact and optimization
-4. **Support Limitations**: Inadequate vendor or community support resources
+### Productivity Impact
+- **Code Generation Speed**: 40-60% faster completion of routine coding tasks
+- **Documentation Efficiency**: AI significantly reduces time spent writing technical documentation
+- **Debugging Assistance**: AI tools help identify issues faster but require human validation
+- **Learning Acceleration**: Junior developers report faster understanding of complex codebases
 
----
+### Quality Concerns
+- **Code Review Necessity**: AI-generated code requires thorough human review for security and optimization
+- **Technical Debt**: Risk of accumulating poorly structured code if AI suggestions are accepted uncritically
+- **Testing Gaps**: AI tools less effective at generating comprehensive test cases
+- **Context Limitations**: AI struggles with project-specific requirements and business logic
 
-## 🌟 STRATEGIC OPPORTUNITIES
+### Workflow Integration
+- **Seamless Tools**: GitHub Copilot and similar tools integrate well into existing development environments
+- **Context Switching**: Some tools require switching between interfaces, reducing efficiency
+- **Team Coordination**: Need for consistent AI tool usage guidelines across development teams
+- **Version Control**: Importance of tracking AI-assisted vs. human-written code for debugging
 
-### 🎯 Immediate Opportunities (0-6 months)
-- **Simplified Onboarding**: Create streamlined adoption processes with clear step-by-step guidance
-- **Enhanced Documentation**: Develop comprehensive, user-friendly implementation resources
-- **Community Building**: Foster active user communities for knowledge sharing and support
-- **Integration Tools**: Build bridges between existing systems and new solutions
+## ADOPTION PATTERNS
 
-### 🚀 Medium-term Opportunities (6-18 months)
-- **Standardization Initiative**: Establish industry standards and best practices
-- **Training Programs**: Develop structured education and certification programs
-- **Ecosystem Development**: Build comprehensive tool ecosystems with seamless integration
-- **Performance Optimization**: Focus on efficiency and performance improvements
+### High Adoption Areas
+- Boilerplate code generation
+- API documentation
+- Code refactoring suggestions
+- Syntax and error correction
 
-### 🔮 Long-term Opportunities (18+ months)
-- **Innovation Leadership**: Drive next-generation solutions addressing current limitations
-- **Market Expansion**: Extend solutions to adjacent markets and use cases
-- **Platform Evolution**: Develop comprehensive platforms rather than point solutions
-- **Industry Transformation**: Lead industry-wide transformation and adoption
+### Limited Adoption Areas
+- Architecture design decisions
+- Complex algorithm implementation
+- Security-critical code sections
+- Performance optimization
 
----
+## RECOMMENDATIONS
 
-## 📋 ACTIONABLE RECOMMENDATIONS
+1. **Establish Guidelines**: Create team standards for AI tool usage and code review processes
+2. **Skill Development**: Maintain focus on fundamental programming skills alongside AI tool usage
+3. **Quality Assurance**: Implement additional testing for AI-generated code
+4. **Training Programs**: Educate developers on effective AI tool usage and limitations
+5. **Tool Evaluation**: Regularly assess AI tools for security, accuracy, and team fit"""
+    
+    else:
+        # Generic fallback based on topic keywords
+        synthesis = f"""# RESEARCH ANALYSIS: {research_question.upper()}
 
-### 🏃‍♂️ IMMEDIATE ACTIONS (Next 30 Days)
-1. **Audit Current Solutions**: Assess existing tools and identify integration gaps
-2. **Stakeholder Alignment**: Conduct workshops to align cross-functional teams
-3. **Quick Wins Identification**: Identify low-effort, high-impact improvements
-4. **Resource Planning**: Allocate dedicated resources for implementation and support
+## EXECUTIVE SUMMARY
 
-### 📈 SHORT-TERM INITIATIVES (3-6 Months)
-1. **Pilot Program Launch**: Start small-scale implementations to validate approaches
-2. **Training Development**: Create comprehensive training materials and programs
-3. **Integration Strategy**: Develop systematic approach to system integration
-4. **Feedback Loops**: Establish continuous feedback mechanisms with users
+This research examines perspectives on "{research_question}" among {demographic}, revealing diverse viewpoints and practical considerations that inform decision-making in this area.
 
-### 🎯 STRATEGIC PRIORITIES (6-12 Months)
-1. **Platform Consolidation**: Reduce tool fragmentation through strategic consolidation
-2. **Standard Development**: Lead or participate in industry standardization efforts
-3. **Ecosystem Partnerships**: Build strategic partnerships for enhanced integration
-4. **Innovation Investment**: Invest in R&D for next-generation solutions
+## KEY FINDINGS
 
-### 🔄 CONTINUOUS IMPROVEMENT
-1. **Regular Assessment**: Quarterly reviews of implementation progress and challenges
-2. **User Feedback Integration**: Systematic collection and incorporation of user insights
-3. **Market Monitoring**: Continuous monitoring of industry trends and competitive landscape
-4. **Agile Adaptation**: Flexible approach to strategy adjustment based on learnings
+### Primary Themes
+- **Practical Implementation**: Participants focus on real-world application challenges and solutions
+- **Resource Considerations**: Time, budget, and skill requirements significantly influence adoption decisions
+- **Quality vs. Efficiency**: Balance between maintaining standards and achieving practical outcomes
+- **Knowledge Gaps**: Areas where additional education or information would improve decision-making
 
----
+### Diverse Perspectives
+Different stakeholder groups bring unique viewpoints based on their roles, experience levels, and organizational contexts.
 
-## 🎯 SUCCESS METRICS & KPIs
+### Common Challenges
+- Implementation complexity and learning curves
+- Integration with existing systems and processes
+- Measuring effectiveness and return on investment
+- Staying current with rapidly evolving best practices
 
-### 📊 Adoption Metrics
-- User adoption rate and time-to-value
-- Implementation success rate and timeline adherence
-- User satisfaction and Net Promoter Score (NPS)
-- Training completion and certification rates
+## INSIGHTS BY STAKEHOLDER GROUP
 
-### 💡 Impact Metrics
-- Productivity improvements and efficiency gains
-- Cost reduction and ROI achievement
-- Quality improvements and error reduction
-- Innovation velocity and time-to-market
+### Experienced Practitioners
+- Focus on proven methodologies and risk management
+- Emphasis on long-term sustainability and maintenance
+- Preference for incremental rather than revolutionary changes
 
-### 🤝 Engagement Metrics
-- Community participation and contribution levels
-- Support ticket volume and resolution time
-- Documentation usage and feedback quality
-- Partnership engagement and collaboration depth
+### Emerging Professionals
+- Openness to new approaches and technologies
+- Focus on skill development and career advancement
+- Interest in innovative solutions and best practices
 
----
+### Decision Makers
+- Priority on business impact and strategic alignment
+- Concern about resource allocation and timeline management
+- Need for clear metrics and success indicators
 
-## 🔮 FUTURE OUTLOOK
+## RECOMMENDATIONS
 
-The research reveals a market ready for transformation but requiring thoughtful, strategic implementation. Success will depend on addressing fundamental challenges around complexity, integration, and resource constraints while building strong communities and ecosystems. Organizations that can balance innovation with practical implementation considerations will be best positioned to lead in this evolving landscape.
-
-**Key Success Factors**:
-- User-centric design and implementation
-- Strong ecosystem partnerships and integration
-- Continuous learning and adaptation
-- Balance between innovation and practicality
-
-This analysis provides a foundation for strategic decision-making and implementation planning, ensuring that initiatives align with real user needs and market dynamics."""
-
+1. **Education and Training**: Develop comprehensive learning resources for different skill levels
+2. **Best Practices**: Establish clear guidelines and standards for implementation
+3. **Community Building**: Foster knowledge sharing and collaboration among practitioners
+4. **Continuous Improvement**: Regular assessment and adaptation based on feedback and results
+5. **Strategic Planning**: Align implementation with broader organizational goals and priorities"""
+    
     return synthesis
 
 def generate_contextual_synthesis(research_question: str, demographic: str, interviews: list) -> str:
@@ -732,13 +825,13 @@ def generate_contextual_synthesis(research_question: str, demographic: str, inte
         if any(word in resp.lower() for word in ["improve", "better", "enhance", "optimize"]):
             opportunities.append("Process optimization potential")
     
-    synthesis = f"""# 🔍 RESEARCH ANALYSIS: {research_question.title()}
+    synthesis = f"""# RESEARCH ANALYSIS: {research_question.title()}
 
-## 📊 EXECUTIVE SUMMARY
+## EXECUTIVE SUMMARY
 
 This research examined {research_question.lower()} among {demographic}, conducting {len(interviews)} in-depth interviews to understand current practices, challenges, and opportunities. The analysis reveals significant insights about user behavior, pain points, and strategic opportunities for improvement.
 
-## 🎯 KEY FINDINGS
+## KEY FINDINGS
 
 ### Primary Themes Identified:
 {chr(10).join([f"• **{theme}**: Consistent patterns across multiple interviews" for theme in common_themes[:4]])}
@@ -746,7 +839,7 @@ This research examined {research_question.lower()} among {demographic}, conducti
 ### User Perspectives by Role:
 {chr(10).join([f"• **{insight['name']}** ({insight['role']}): Provided insights on practical implementation and daily usage patterns" for insight in persona_insights])}
 
-## 🔍 DETAILED INSIGHTS
+## DETAILED INSIGHTS
 
 ### Current State Analysis:
 Users demonstrate varying levels of adoption and integration, with experienced professionals showing more sophisticated usage patterns while newer users focus on basic functionality and learning.
@@ -757,7 +850,7 @@ Users demonstrate varying levels of adoption and integration, with experienced p
 ### Opportunities for Improvement:
 {chr(10).join([f"• {opp}" for opp in set(opportunities)]) if opportunities else "• Streamlined onboarding processes\n• Enhanced tool integration\n• Better training resources"}
 
-## 📋 STRATEGIC RECOMMENDATIONS
+## STRATEGIC RECOMMENDATIONS
 
 ### Immediate Actions:
 1. **User Education & Training**: Develop comprehensive onboarding programs addressing skill gaps identified across interviews
@@ -774,7 +867,7 @@ Users demonstrate varying levels of adoption and integration, with experienced p
 2. **Ecosystem Expansion**: Build partnerships and integrations based on user workflow requirements
 3. **Data-Driven Optimization**: Use analytics to continuously refine features and user experience
 
-## 🎪 CONCLUSION
+## CONCLUSION
 
 The research demonstrates significant potential for {research_question.lower()} advancement within the {demographic} community. Success will depend on addressing identified pain points while leveraging the enthusiasm and expertise of early adopters to drive broader adoption.
 
