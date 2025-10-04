@@ -1,852 +1,106 @@
-INFO:     Will watch for changes in these directories: ['/Users/ADML/Desktop/user_research/automated-research-app/backend']
+INFO:__main__:LangSmith integration enabled with project: automated-research-app
+INFO:__main__:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
+INFO:database:Initializing postgresql database...
+INFO:database:Successfully applied database migration
+INFO:database:Successfully applied database migration
+INFO:database:Successfully applied database migration
+INFO:database:Database initialization completed successfully
+INFO:     Started server process [49645]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [80960] using WatchFiles
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [81031]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53295 - "GET /dashboard/stats HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get interviews: column p.persona_id does not exist
-LINE 8:                     COUNT(DISTINCT p.persona_id) as persona_...
-                                           ^
-
-INFO:     127.0.0.1:53299 - "GET /interviews HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get reports: column "updated_at" does not exist
-LINE 7:                     updated_at,
-                            ^
-HINT:  Perhaps you meant to reference the column "research_sessions.created_at".
-
-INFO:     127.0.0.1:53304 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53318 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53318 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53318 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53318 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [81031]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [81718]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [81718]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [81726]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [81726]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [81766]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53363 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53363 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [81766]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [81782]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53388 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53388 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53399 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53404 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53411 - "GET /reports HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53420 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53420 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53432 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53437 - "GET /research/sessions HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:53442 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53455 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53455 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53479 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53479 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [81782]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [83706]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53491 - "GET /dashboard/stats HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53507 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53507 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53507 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53507 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53521 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_221051_681 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53521 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53554 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_221051_681 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_220948_8254 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53521 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_220948_8254 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_220642_7959 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_220642_7959 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_214821_4379 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_214821_4379 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_214633_8771 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_214633_8771 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_135802_1045 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_135802_1045 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_133534_7621 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_133534_7621 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_131725_6654 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_131725_6654 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_130605_6263 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_130605_6263 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53514 - "GET /dashboard/session/research_20251003_130336_8685 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/session/research_20251003_130336_8685 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53512 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53512 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53605 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53605 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53610 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53632 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53632 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53618 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53632 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53636 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53636 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53655 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53655 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53655 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_221051_681 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_220948_8254 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_221051_681 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_220642_7959 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_220948_8254 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_214821_4379 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_220642_7959 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_214633_8771 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_135802_1045 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_214821_4379 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_214633_8771 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_133534_7621 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_135802_1045 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_131725_6654 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_133534_7621 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_130605_6263 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53657 - "GET /dashboard/session/research_20251003_131725_6654 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_130336_8685 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53636 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53623 - "GET /dashboard/session/research_20251003_130605_6263 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53744 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53751 - "GET /interviews HTTP/1.1" 200 OK
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53763 - "GET /dashboard/stats HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [83706]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [84783]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53784 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53790 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [84783]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [85287]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:53823 - "GET /debug/db HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [85287]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [85742]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [85742]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [85761]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [85761]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [85776]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:main_intelligent:Failed to get dashboard stats: 0
-INFO:     127.0.0.1:53952 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53957 - "GET /debug/db HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [85776]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [86096]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [86096]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [86101]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [86101]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [86109]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:54022 - "GET /debug/db HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54056 - "GET /dashboard/stats HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [86109]
-INFO:main_intelligent:LangSmith integration enabled with project: automated-research-app
-INFO:main_intelligent:LangSmith API Key configured: lsv2_pt_aa8353c57b60...
-INFO:database:Initializing postgresql database...
-INFO:database:Successfully applied database migration
-INFO:database:Successfully applied database migration
-INFO:database:Database initialization completed successfully
-INFO:     Started server process [86419]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:54097 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54099 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54099 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54097 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54099 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54097 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54099 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54110 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54117 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_124004_6722 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_122436_5043 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_120606_1344 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_115639_5675 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_115616_5065 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_115145_6205 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_114937_9689 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_114323_129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_002713_1765 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251004_000453_6077 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_235513_3016 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_222403_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_222335_1139 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_222040_2564 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_221627_7567 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_221534_7694 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_221051_681 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_221051_681 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_220948_8254 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_220948_8254 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_220642_7959 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_220642_7959 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_214821_4379 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_214821_4379 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_214633_8771 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_214633_8771 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_135802_1045 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_135802_1045 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_133534_7621 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_133534_7621 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_131725_6654 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_131725_6654 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_130605_6263 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_130605_6263 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54113 - "GET /dashboard/session/research_20251003_130336_8685 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54127 - "GET /dashboard/session/research_20251003_130336_8685 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54191 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54191 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54195 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54191 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54195 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54195 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54206 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54195 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54220 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54237 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54237 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54243 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54250 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54250 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54269 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54269 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54329 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54329 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54351 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54772 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54802 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54805 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54807 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54808 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54808 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54807 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54805 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54802 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54820 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54823 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54823 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54820 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54823 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54827 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54823 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54827 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54827 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54823 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54827 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54837 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54847 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54849 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54847 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54852 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54855 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54847 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54847 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54855 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54852 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54847 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54869 - "OPTIONS /research HTTP/1.1" 200 OK
-INFO:main_intelligent:Starting intelligent research for: theory of relativity
-INFO:main_intelligent:Target demographic: scietists, students
-INFO:main_intelligent:Session ID: research_20251004_145110_4882
-INFO:main_intelligent:Using fallback persona generation for demographic: scietists, students
-INFO:main_intelligent:Research completed successfully with 3 interviews
-INFO:main_intelligent:Stored research session research_20251004_145110_4882 in database
-INFO:     127.0.0.1:54869 - "POST /research HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54898 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54900 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54898 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54903 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54903 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54898 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54898 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54903 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54911 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54898 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54913 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54903 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54898 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54913 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54903 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54911 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55041 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55056 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55058 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55056 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55061 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55127 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55129 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55130 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55127 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55130 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55130 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55130 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55130 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55146 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55148 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55148 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55146 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55124 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55212 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55213 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55217 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55213 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55213 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55217 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55212 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55213 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55224 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55213 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55229 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55224 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55217 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55224 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55262 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55264 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55262 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55264 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55267 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55262 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55262 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55264 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55267 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55262 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55884 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55884 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55889 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55890 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55889 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55889 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55889 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55902 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55889 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55902 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55902 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55887 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55889 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55902 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55919 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55921 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55919 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55925 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56650 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56655 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56650 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56656 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56655 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56666 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56666 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56670 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56666 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56672 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56670 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56681 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56652 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56670 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56820 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56821 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56824 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56820 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56834 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56834 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56838 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56834 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56840 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56849 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56852 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56852 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56852 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56852 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56878 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56878 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56861 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56831 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56878 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57501 - "OPTIONS /dashboard/stats HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57503 - "OPTIONS /dashboard/sessions HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57506 - "OPTIONS /dashboard/stats HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57507 - "OPTIONS /dashboard/sessions HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57516 - "OPTIONS /research HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57516 - "OPTIONS /research HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57535 - "OPTIONS /dashboard/stats HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57538 - "OPTIONS /dashboard/sessions HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57540 - "OPTIONS /dashboard/stats HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57541 - "OPTIONS /dashboard/sessions HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:57546 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57546 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57546 - "GET /interviews HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [86419]
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'venv/lib/python3.12/site-packages/jwt/types.py', 'venv/lib/python3.12/site-packages/jwt/api_jwt.py', 'venv/lib/python3.12/site-packages/pycparser/__init__.py', 'venv/lib/python3.12/site-packages/pycparser/ply/cpp.py', 'venv/lib/python3.12/site-packages/jwt/api_jwk.py', 'venv/lib/python3.12/site-packages/jwt/__init__.py', 'venv/lib/python3.12/site-packages/pycparser/c_generator.py', 'venv/lib/python3.12/site-packages/jwt/warnings.py', 'venv/lib/python3.12/site-packages/jwt/algorithms.py', 'venv/lib/python3.12/site-packages/pycparser/lextab.py', 'venv/lib/python3.12/site-packages/pycparser/ply/ctokens.py', 'venv/lib/python3.12/site-packages/jwt/jwks_client.py', 'venv/lib/python3.12/site-packages/jwt/exceptions.py', 'venv/lib/python3.12/site-packages/jwt/help.py', 'venv/lib/python3.12/site-packages/pycparser/ply/ygen.py', 'venv/lib/python3.12/site-packages/jwt/jwk_set_cache.py', 'venv/lib/python3.12/site-packages/pycparser/ply/lex.py', 'venv/lib/python3.12/site-packages/pycparser/ply/__init__.py', 'venv/lib/python3.12/site-packages/pycparser/ply/yacc.py', 'venv/lib/python3.12/site-packages/pycparser/c_ast.py', 'venv/lib/python3.12/site-packages/jwt/utils.py', 'venv/lib/python3.12/site-packages/pycparser/ast_transforms.py', 'venv/lib/python3.12/site-packages/pycparser/_build_tables.py', 'venv/lib/python3.12/site-packages/pycparser/c_lexer.py', 'venv/lib/python3.12/site-packages/pycparser/plyparser.py', 'venv/lib/python3.12/site-packages/pycparser/c_parser.py', 'venv/lib/python3.12/site-packages/pycparser/yacctab.py', 'venv/lib/python3.12/site-packages/jwt/api_jws.py', 'venv/lib/python3.12/site-packages/pycparser/_ast_gen.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'venv/lib/python3.12/site-packages/cffi/verifier.py', 'venv/lib/python3.12/site-packages/cffi/api.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/scrypt.py', 'venv/lib/python3.12/site-packages/cryptography/fernet.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/hkdf.py', 'venv/lib/python3.12/site-packages/cryptography/x509/verification.py', 'venv/lib/python3.12/site-packages/cffi/_imp_emulation.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/_oid.py', 'venv/lib/python3.12/site-packages/cffi/cffi_opcode.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/serialization/pkcs7.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/bindings/openssl/_conditional.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/twofactor/hotp.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/cmac.py', 'venv/lib/python3.12/site-packages/cffi/setuptools_ext.py', 'venv/lib/python3.12/site-packages/cryptography/x509/certificate_transparency.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/ciphers/modes.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/hashes.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/bindings/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/dsa.py', 'venv/lib/python3.12/site-packages/cffi/commontypes.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/_asymmetric.py', 'venv/lib/python3.12/site-packages/cryptography/utils.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/backends/openssl/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/serialization/pkcs12.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/poly1305.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/asn1/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/x963kdf.py', 'venv/lib/python3.12/site-packages/cryptography/x509/ocsp.py', 'venv/lib/python3.12/site-packages/cryptography/x509/name.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/hmac.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/_serialization.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/kbkdf.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/serialization/base.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/bindings/openssl/binding.py', 'venv/lib/python3.12/site-packages/cryptography/__about__.py', 'venv/lib/python3.12/site-packages/cryptography/x509/oid.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/rsa.py', 'venv/lib/python3.12/site-packages/cffi/model.py', 'venv/lib/python3.12/site-packages/cryptography/__init__.py', 'venv/lib/python3.12/site-packages/cffi/recompiler.py', 'venv/lib/python3.12/site-packages/cffi/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/ciphers/algorithms.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/ciphers/aead.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/decrepit/ciphers/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/exceptions.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/padding.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/decrepit/ciphers/algorithms.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/bindings/openssl/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/backends/openssl/backend.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/serialization/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/concatkdf.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/twofactor/totp.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/backends/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/_cipheralgorithm.py', 'venv/lib/python3.12/site-packages/cffi/backend_ctypes.py', 'venv/lib/python3.12/site-packages/cffi/pkgconfig.py', 'venv/lib/python3.12/site-packages/cryptography/x509/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/ciphers/base.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/x25519.py', 'venv/lib/python3.12/site-packages/cffi/lock.py', 'venv/lib/python3.12/site-packages/cryptography/x509/base.py', 'venv/lib/python3.12/site-packages/cryptography/x509/extensions.py', 'venv/lib/python3.12/site-packages/cffi/_shimmed_dist_utils.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/pbkdf2.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/dh.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/ciphers/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/ec.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/keywrap.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/serialization/ssh.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/ed25519.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/twofactor/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/x509/general_name.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/x448.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/__init__.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/types.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/asn1/asn1.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/ed448.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf/argon2.py', 'venv/lib/python3.12/site-packages/cffi/ffiplatform.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/padding.py', 'venv/lib/python3.12/site-packages/cffi/error.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/decrepit/__init__.py', 'venv/lib/python3.12/site-packages/cffi/vengine_cpy.py', 'venv/lib/python3.12/site-packages/cffi/vengine_gen.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/constant_time.py', 'venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric/utils.py', 'venv/lib/python3.12/site-packages/cffi/cparser.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'database.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
-WARNING:  WatchFiles detected changes in 'main_intelligent.py'. Reloading...
-Fatal Python error: init_sys_streams: can't initialize sys standard streams
-Python runtime state: core initialized
-OSError: [Errno 9] Bad file descriptor
-
-Current thread 0x00007ff84a01e000 (most recent call first):
-  <no Python frame>
+INFO:     127.0.0.1:63005 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63009 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63015 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63017 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63015 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63017 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63045 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63046 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63077 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63078 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63100 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63102 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63100 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63105 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63121 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63122 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63141 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63143 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63158 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63159 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63177 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63178 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63226 - "OPTIONS /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63228 - "OPTIONS /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63226 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63228 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63235 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63236 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63235 - "OPTIONS /interviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63242 - "OPTIONS /interviews HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63239 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63244 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63242 - "GET /interviews HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63244 - "GET /interviews HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63244 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63242 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63242 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63244 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63256 - "GET /interviews HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63242 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63258 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63244 - "GET /interviews HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63244 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63258 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63244 - "OPTIONS /reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63270 - "OPTIONS /reports HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63267 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63258 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63244 - "GET /reports HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63267 - "GET /reports HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63267 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63258 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63267 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63272 - "GET /reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63281 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63258 - "GET /reports HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63289 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
+INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63292 - "GET /dashboard/sessions HTTP/1.1" 200 OK

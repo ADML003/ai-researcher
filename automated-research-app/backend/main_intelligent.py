@@ -1357,48 +1357,77 @@ async def get_research_details(session_id: str, current_user: Dict = Depends(get
 
 @app.get("/interviews")
 async def get_all_interviews(current_user: Dict = Depends(get_current_user)):
-    """Get optimized interviews data for authenticated user"""
+    """Get detailed interviews data for authenticated user with full persona and Q&A data"""
     try:
         user_id = current_user.get("user_id")
             
         with get_db_connection() as conn:
             cursor = conn.cursor()
             
-            # Single optimized query with joins for user's interview data
+            # Get all completed sessions for the user
             cursor.execute("""
-                SELECT 
-                    rs.session_id,
-                    rs.research_question,
-                    rs.target_demographic,
-                    rs.created_at,
-                    rs.status,
-                    COUNT(DISTINCT p.id) as persona_count,
-                    COUNT(DISTINCT i.id) as interview_count
-                FROM research_sessions rs
-                LEFT JOIN personas p ON rs.session_id = p.session_id
-                LEFT JOIN interviews i ON rs.session_id = i.session_id
-                WHERE rs.status = 'completed' AND rs.user_id = %s
-                GROUP BY rs.session_id, rs.research_question, rs.target_demographic, rs.created_at, rs.status
-                ORDER BY rs.created_at DESC
+                SELECT session_id, research_question, target_demographic, created_at, status
+                FROM research_sessions 
+                WHERE status = 'completed' AND user_id = %s
+                ORDER BY created_at DESC
                 LIMIT 50
             """, (user_id,))
             
-            interviews_summary = []
-            for row in cursor.fetchall():
-                interviews_summary.append({
-                    "session_id": row["session_id"],
-                    "research_question": row["research_question"],
-                    "target_demographic": row["target_demographic"],
-                    "created_at": row["created_at"].isoformat() if row["created_at"] else None,
-                    "status": row["status"],
-                    "persona_count": row["persona_count"] or 0,
-                    "interview_count": row["interview_count"] or 0
+            sessions = cursor.fetchall()
+            interviews_data = []
+            
+            for session in sessions:
+                session_id = session["session_id"]
+                
+                # Get personas for this session
+                cursor.execute("""
+                    SELECT name, age, job, traits, background, communication_style
+                    FROM personas 
+                    WHERE session_id = %s
+                """, (session_id,))
+                
+                personas_data = {}
+                persona_rows = cursor.fetchall()
+                
+                for persona_row in persona_rows:
+                    persona_name = persona_row["name"]
+                    
+                    # Get interviews for this persona
+                    cursor.execute("""
+                        SELECT question, answer, question_order
+                        FROM interviews 
+                        WHERE session_id = %s AND persona_name = %s
+                        ORDER BY question_order
+                    """, (session_id, persona_name))
+                    
+                    qa_rows = cursor.fetchall()
+                    questions_and_answers = [
+                        {
+                            "question": qa["question"],
+                            "answer": qa["answer"],
+                            "order": qa["question_order"]
+                        }
+                        for qa in qa_rows
+                    ]
+                    
+                    personas_data[persona_name] = {
+                        "questions_and_answers": questions_and_answers
+                    }
+                
+                # Add session with full interview data
+                interviews_data.append({
+                    "session_id": session["session_id"],
+                    "research_question": session["research_question"],
+                    "target_demographic": session["target_demographic"],
+                    "created_at": session["created_at"].isoformat() if session["created_at"] else None,
+                    "status": session["status"],
+                    "personas": personas_data
                 })
             
             return {
                 "success": True,
-                "data": interviews_summary,
-                "total_count": len(interviews_summary)
+                "data": interviews_data,
+                "total_count": len(interviews_data)
             }
         
     except Exception as e:

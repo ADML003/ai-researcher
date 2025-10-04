@@ -89,18 +89,8 @@ export default function InterviewsPage() {
         const data = await response.json();
         console.log("Interviews loaded:", data.total_count); // Debug log
 
-        // Transform the optimized response into the expected format
-        const transformedInterviews: GroupedInterview[] = data.data.map(
-          (session: any) => ({
-            session_id: session.session_id,
-            research_question: session.research_question,
-            target_demographic: session.target_demographic,
-            created_at: session.created_at,
-            personas: {}, // Simplified structure for faster loading
-          })
-        );
-
-        setInterviews(transformedInterviews);
+        // Use the full interview data from the backend
+        setInterviews(data.data || []);
       } else {
         console.error("Failed to fetch interviews:", response.status);
         setInterviews([]);
