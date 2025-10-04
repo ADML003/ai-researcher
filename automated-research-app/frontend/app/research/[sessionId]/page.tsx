@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 import {
   ArrowLeft,
   User,
@@ -46,6 +47,7 @@ interface ResearchSession {
 export default function ResearchDetailPage() {
   const params = useParams();
   const sessionId = params.sessionId as string;
+  const { getToken } = useAuth();
   const [research, setResearch] = useState<ResearchSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -222,12 +224,36 @@ export default function ResearchDetailPage() {
   useEffect(() => {
     const fetchResearchDetails = async () => {
       try {
+        // Get authentication token from Clerk
+        let token;
+        try {
+          token = await getToken();
+        } catch (authError) {
+          console.error("Authentication error:", authError);
+          throw new Error("Please log in to view research details");
+        }
+
         const response = await fetch(
           `${
             process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-          }/dashboard/session/${sessionId}`
+          }/dashboard/session/${sessionId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
         );
         if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Please log in to view research details");
+          } else if (response.status === 403) {
+            throw new Error(
+              "You don't have permission to view this research session"
+            );
+          } else if (response.status === 404) {
+            throw new Error("Research session not found");
+          }
           throw new Error("Failed to fetch research details");
         }
         const data = await response.json();

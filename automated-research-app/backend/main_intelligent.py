@@ -97,25 +97,32 @@ def verify_clerk_token(token: str) -> Optional[Dict]:
         logger.error(f"Token verification failed: {e}")
         return None
 
-def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Optional[Dict]:
-    """Extract user from JWT token"""
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict:
+    """Extract user from JWT token - raises HTTPException if not authenticated"""
     try:
         if not credentials:
-            return None
+            raise HTTPException(status_code=401, detail="Authorization header missing")
         
         token = credentials.credentials
         user_data = verify_clerk_token(token)
         
         if user_data:
-            return {
+            user_info = {
                 "user_id": user_data.get("sub"),
                 "email": user_data.get("email"),
                 "name": user_data.get("name")
             }
+            # Debug logging
+            logger.info(f"Authenticated user - User ID: {user_info['user_id']}")
+            return user_info
+        else:
+            raise HTTPException(status_code=401, detail="Invalid token")
+            
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Authentication error: {e}")
-    
-    return None
+        raise HTTPException(status_code=401, detail="Authentication failed")
 
 def get_current_user_optional(authorization: Optional[str] = Header(None)) -> Optional[Dict]:
     """Get current user without requiring authentication (for guest mode)"""
@@ -1002,22 +1009,23 @@ async def get_dashboard_stats(current_user: Optional[Dict] = Depends(get_current
             result = cursor.fetchone()
             total_sessions = result["count"] if result else 0
         
-            # Get total personas generated
-            cursor.execute("SELECT COUNT(*) as count FROM personas")
+            # Get total personas generated (filtered by user)
+            persona_query = f"SELECT COUNT(*) as count FROM personas p JOIN research_sessions rs ON p.session_id = rs.session_id{user_filter}"
+            cursor.execute(persona_query, params)
             result = cursor.fetchone()
             total_personas = result["count"] if result else 0
             
-            # Get total interviews conducted
-            cursor.execute("SELECT COUNT(*) as count FROM interviews")
+            # Get total interviews conducted (filtered by user)
+            interview_query = f"SELECT COUNT(*) as count FROM interviews i JOIN research_sessions rs ON i.session_id = rs.session_id{user_filter}"
+            cursor.execute(interview_query, params)
             result = cursor.fetchone()
             total_interviews = result["count"] if result else 0
             
-            # Get sessions by status
-            cursor.execute("""
-                SELECT status, COUNT(*) as count
-                FROM research_sessions 
-                GROUP BY status
-            """)
+            # Get sessions by status (filtered by user)
+            status_query = f"""SELECT status, COUNT(*) as count
+                FROM research_sessions{user_filter}
+                GROUP BY status"""
+            cursor.execute(status_query, params)
             status_rows = cursor.fetchall()
             status_counts = {row["status"]: row["count"] for row in status_rows} if status_rows else {}
             
@@ -1029,32 +1037,29 @@ async def get_dashboard_stats(current_user: Optional[Dict] = Depends(get_current
             # Get average completion time for completed sessions - using default since no updated_at field
             avg_completion_time = 0  # Cannot calculate without updated_at field in database
             
-            # Get sessions created today
-            cursor.execute("""
-                SELECT COUNT(*) as count
+            # Get sessions created today (filtered by user)
+            today_query = f"""SELECT COUNT(*) as count
                 FROM research_sessions 
-                WHERE created_at::date = CURRENT_DATE
-            """)
+                WHERE created_at::date = CURRENT_DATE{user_filter.replace(' WHERE', ' AND') if user_filter else ''}"""
+            cursor.execute(today_query, params)
             result = cursor.fetchone()
             sessions_today = result["count"] if result else 0
             
-            # Get sessions created this week
-            cursor.execute("""
-                SELECT COUNT(*) as count
+            # Get sessions created this week (filtered by user)
+            week_query = f"""SELECT COUNT(*) as count
                 FROM research_sessions 
-                WHERE created_at >= date_trunc('week', CURRENT_DATE)
-            """)
+                WHERE created_at >= date_trunc('week', CURRENT_DATE){user_filter.replace(' WHERE', ' AND') if user_filter else ''}"""
+            cursor.execute(week_query, params)
             result = cursor.fetchone()
             sessions_this_week = result["count"] if result else 0
             
-            # Get recent sessions with enhanced data
-            cursor.execute("""
-                SELECT session_id, research_question, target_demographic, created_at, status, 
+            # Get recent sessions with enhanced data (filtered by user)
+            recent_query = f"""SELECT session_id, research_question, target_demographic, created_at, status, 
                        CASE WHEN synthesis IS NOT NULL AND LENGTH(synthesis) > 0 THEN true ELSE false END as has_results
-                FROM research_sessions 
+                FROM research_sessions{user_filter}
                 ORDER BY created_at DESC 
-                LIMIT 10
-            """)
+                LIMIT 10"""
+            cursor.execute(recent_query, params)
             recent_rows = cursor.fetchall()
             recent_sessions = [
                 {
@@ -1150,9 +1155,11 @@ async def debug_database():
         }
 
 @app.get("/dashboard/sessions")
-async def get_research_sessions():
-    """Get all research sessions for dashboard"""
+async def get_research_sessions(current_user: Dict = Depends(get_current_user)):
+    """Get research sessions for authenticated user"""
     try:
+        user_id = current_user.get("user_id")
+            
         with get_db_connection() as conn:
             cursor = conn.cursor()
         
@@ -1160,8 +1167,9 @@ async def get_research_sessions():
                 SELECT session_id, research_question, target_demographic, 
                        num_interviews, created_at, status
                 FROM research_sessions 
+                WHERE user_id = %s
                 ORDER BY created_at DESC
-            """)
+            """, (user_id,))
             
             rows = cursor.fetchall()
             sessions = [
@@ -1183,23 +1191,25 @@ async def get_research_sessions():
         return {"sessions": []}
 
 @app.get("/dashboard/session/{session_id}")
-async def get_session_details(session_id: str):
-    """Get detailed information for a specific session"""
+async def get_session_details(session_id: str, current_user: Dict = Depends(get_current_user)):
+    """Get detailed information for a specific session (user must own the session)"""
     try:
+        user_id = current_user.get("user_id")
+            
         with get_db_connection() as conn:
             cursor = conn.cursor()
             
-            # Get session info
+            # Get session info - ensure user owns this session
             cursor.execute("""
                 SELECT research_question, target_demographic, num_interviews, 
                        created_at, synthesis, status
                 FROM research_sessions 
-                WHERE session_id = %s
-            """, (session_id,))
+                WHERE session_id = %s AND user_id = %s
+            """, (session_id, user_id))
         
             session_row = cursor.fetchone()
             if not session_row:
-                return {"error": "Session not found"}
+                raise HTTPException(status_code=404, detail="Session not found or access denied")
         
             # Get personas
             cursor.execute("""
@@ -1258,23 +1268,25 @@ async def get_session_details(session_id: str):
         return {"error": "Failed to retrieve session details"}
 
 @app.get("/research/{session_id}")
-async def get_research_details(session_id: str):
-    """Get detailed research information for frontend"""
+async def get_research_details(session_id: str, current_user: Dict = Depends(get_current_user)):
+    """Get detailed research information for frontend (user must own the session)"""
     try:
+        user_id = current_user.get("user_id")
+        
         with get_db_connection() as conn:
             cursor = conn.cursor()
             
-            # Get session info
+            # Get session info - ensure user owns this session
             cursor.execute("""
                 SELECT id, session_id, research_question, target_demographic, num_interviews, 
                        created_at, synthesis, status
                 FROM research_sessions 
-                WHERE session_id = %s
-            """, (session_id,))
+                WHERE session_id = %s AND user_id = %s
+            """, (session_id, user_id))
             
             session_row = cursor.fetchone()
             if not session_row:
-                raise HTTPException(status_code=404, detail="Research session not found")
+                raise HTTPException(status_code=404, detail="Research session not found or access denied")
             
             # Get personas with proper structure for frontend
             cursor.execute("""
@@ -1344,13 +1356,15 @@ async def get_research_details(session_id: str):
         raise HTTPException(status_code=500, detail="Failed to retrieve research details")
 
 @app.get("/interviews")
-async def get_all_interviews():
-    """Get optimized interviews data for fast loading"""
+async def get_all_interviews(current_user: Dict = Depends(get_current_user)):
+    """Get optimized interviews data for authenticated user"""
     try:
+        user_id = current_user.get("user_id")
+            
         with get_db_connection() as conn:
             cursor = conn.cursor()
             
-            # Single optimized query with joins for all interview data
+            # Single optimized query with joins for user's interview data
             cursor.execute("""
                 SELECT 
                     rs.session_id,
@@ -1363,11 +1377,11 @@ async def get_all_interviews():
                 FROM research_sessions rs
                 LEFT JOIN personas p ON rs.session_id = p.session_id
                 LEFT JOIN interviews i ON rs.session_id = i.session_id
-                WHERE rs.status = 'completed'
+                WHERE rs.status = 'completed' AND rs.user_id = %s
                 GROUP BY rs.session_id, rs.research_question, rs.target_demographic, rs.created_at, rs.status
                 ORDER BY rs.created_at DESC
                 LIMIT 50
-            """)
+            """, (user_id,))
             
             interviews_summary = []
             for row in cursor.fetchall():
@@ -1397,13 +1411,15 @@ async def get_all_interviews():
         }
 
 @app.get("/reports")
-async def get_all_reports():
-    """Get optimized reports data for fast loading"""
+async def get_all_reports(current_user: Dict = Depends(get_current_user)):
+    """Get optimized reports data for authenticated user"""
     try:
+        user_id = current_user.get("user_id")
+            
         with get_db_connection() as conn:
             cursor = conn.cursor()
             
-            # Single optimized query for completed research sessions with synthesis
+            # Single optimized query for user's completed research sessions with synthesis
             cursor.execute("""
                 SELECT 
                     session_id,
@@ -1415,10 +1431,10 @@ async def get_all_reports():
                          ELSE synthesis END as synthesis_preview,
                     LENGTH(synthesis) as synthesis_length
                 FROM research_sessions 
-                WHERE status = 'completed' AND synthesis IS NOT NULL
+                WHERE status = 'completed' AND synthesis IS NOT NULL AND user_id = %s
                 ORDER BY created_at DESC
                 LIMIT 50
-            """)
+            """, (user_id,))
             
             reports_summary = []
             for row in cursor.fetchall():

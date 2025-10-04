@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 import {
   FileText,
   Download,
@@ -29,6 +30,7 @@ interface ResearchReport {
 
 export default function ReportsPage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const [reports, setReports] = useState<ResearchReport[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,13 +47,29 @@ export default function ReportsPage() {
 
   const fetchReports = async () => {
     try {
+      const token = await getToken();
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
       const response = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-        }/dashboard/sessions`
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/reports`,
+        {
+          headers,
+        }
       );
-      const data = await response.json();
-      setReports(data.sessions || []);
+
+      if (response.ok) {
+        const data = await response.json();
+        setReports(data.data || []);
+      } else {
+        console.error("Failed to fetch reports:", response.status);
+        setReports([]);
+      }
     } catch (error) {
       console.error("Failed to fetch reports:", error);
     } finally {
