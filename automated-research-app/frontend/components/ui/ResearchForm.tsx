@@ -37,18 +37,18 @@ export const ResearchForm: React.FC<ResearchFormProps> = ({
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden max-w-4xl mx-auto animate-scale-in">
       {/* Form Header */}
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-4 border-b border-gray-200 dark:border-gray-700">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-3 border-b border-gray-200 dark:border-gray-700">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-0.5">
           Start New Research
         </h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-xs text-gray-600 dark:text-gray-400">
           Configure your research and let AI handle the interviews
         </p>
       </div>
 
       {/* Form Content */}
-      <div className="p-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="p-4">
+        <form onSubmit={handleSubmit} className="space-y-3">
           {/* Research Question */}
           <div className="form-group">
             <label htmlFor="research-question" className="form-label text-sm">
@@ -56,7 +56,7 @@ export const ResearchForm: React.FC<ResearchFormProps> = ({
             </label>
             <textarea
               id="research-question"
-              className="apple-input-enhanced min-h-[80px] text-sm"
+              className="apple-input-enhanced min-h-[60px] text-sm"
               placeholder="What would you like to research? (e.g., How do developers approach API documentation?)"
               value={researchQuestion}
               onChange={(e) => setResearchQuestion(e.target.value)}
@@ -129,7 +129,7 @@ export const ResearchForm: React.FC<ResearchFormProps> = ({
           </details>
 
           {/* Action Button */}
-          <div className="pt-4">
+          <div className="pt-2">
             <button
               type="submit"
               disabled={
@@ -137,7 +137,7 @@ export const ResearchForm: React.FC<ResearchFormProps> = ({
                 !researchQuestion.trim() ||
                 !targetDemographic.trim()
               }
-              className="button-gradient w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none py-3 text-base font-medium"
+              className="button-gradient w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none py-2.5 text-sm font-medium"
             >
               {isLoading ? (
                 <>

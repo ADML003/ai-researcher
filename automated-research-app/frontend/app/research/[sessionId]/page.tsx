@@ -119,18 +119,18 @@ export default function ResearchDetailPage() {
 
     // Title
     pdf.setFontSize(16);
-    pdf.setFont(undefined, "bold");
+    pdf.setFont("helvetica", "bold");
     pdf.text("RESEARCH REPORT", 20, 20);
 
     // Basic info
     pdf.setFontSize(12);
-    pdf.setFont(undefined, "normal");
+    pdf.setFont("helvetica", "normal");
     let yPos = 35;
 
     const addText = (label: string, value: string, maxWidth = 170) => {
-      pdf.setFont(undefined, "bold");
+      pdf.setFont("helvetica", "bold");
       pdf.text(label, 20, yPos);
-      pdf.setFont(undefined, "normal");
+      pdf.setFont("helvetica", "normal");
       const lines = pdf.splitTextToSize(value, maxWidth);
       pdf.text(lines, 20, yPos + 5);
       yPos += 5 + lines.length * 5 + 5;
@@ -146,7 +146,7 @@ export default function ResearchDetailPage() {
     // Personas section
     yPos += 10;
     pdf.setFontSize(14);
-    pdf.setFont(undefined, "bold");
+    pdf.setFont("helvetica", "bold");
     pdf.text("PERSONAS", 20, yPos);
     yPos += 10;
 
@@ -169,7 +169,7 @@ export default function ResearchDetailPage() {
     pdf.addPage();
     yPos = 20;
     pdf.setFontSize(14);
-    pdf.setFont(undefined, "bold");
+    pdf.setFont("helvetica", "bold");
     pdf.text("INTERVIEWS", 20, yPos);
     yPos += 10;
 
@@ -197,12 +197,12 @@ export default function ResearchDetailPage() {
     pdf.addPage();
     yPos = 20;
     pdf.setFontSize(14);
-    pdf.setFont(undefined, "bold");
+    pdf.setFont("helvetica", "bold");
     pdf.text("SYNTHESIS", 20, yPos);
     yPos += 10;
 
     pdf.setFontSize(11);
-    pdf.setFont(undefined, "normal");
+    pdf.setFont("helvetica", "normal");
     const synthesisLines = pdf.splitTextToSize(
       research.synthesis || "No synthesis available",
       170
@@ -223,7 +223,9 @@ export default function ResearchDetailPage() {
     const fetchResearchDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/dashboard/session/${sessionId}`
+          `${
+            process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+          }/dashboard/session/${sessionId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch research details");

@@ -128,6 +128,10 @@ class DatabaseManager:
             '''
             ALTER TABLE interviews
             ALTER COLUMN persona_name TYPE TEXT
+            ''',
+            '''
+            ALTER TABLE research_sessions 
+            ADD COLUMN IF NOT EXISTS user_id VARCHAR(255) DEFAULT 'guest'
             '''
         ]
         

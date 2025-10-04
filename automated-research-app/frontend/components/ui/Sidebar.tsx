@@ -3,15 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Brain,
-  BarChart3,
-  Workflow,
-  Users,
-  FileText,
-  Settings,
-  User,
-} from "lucide-react";
+import { Brain, BarChart3, Users, FileText, User } from "lucide-react";
 
 interface NavigationItem {
   icon: React.ElementType;
@@ -23,10 +15,8 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { icon: Brain, label: "Research", path: "/" },
   { icon: BarChart3, label: "Dashboard", path: "/dashboard", badge: "Live" },
-  { icon: Workflow, label: "Workflows", path: "/workflows", badge: "Beta" },
   { icon: Users, label: "Interviews", path: "/interviews" },
   { icon: FileText, label: "Reports", path: "/reports" },
-  { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
 interface NavItemProps extends NavigationItem {

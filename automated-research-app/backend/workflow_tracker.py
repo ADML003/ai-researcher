@@ -255,6 +255,36 @@ class WorkflowTracker:
             if step.status == StepStatus.RUNNING:
                 return step
         return None
+    
+    def is_active(self) -> bool:
+        """Check if the workflow is still active (has running steps)"""
+        return any(step.status == StepStatus.RUNNING for step in self.steps)
+    
+    def get_total_duration(self) -> int:
+        """Get total duration of completed workflow in milliseconds"""
+        if not self.steps:
+            return 0
+        
+        completed_steps = [step for step in self.steps if step.duration_ms is not None]
+        return sum(step.duration_ms for step in completed_steps)
+    
+    def get_estimated_completion(self) -> Optional[str]:
+        """Get estimated completion time based on current progress"""
+        completed_count = sum(1 for step in self.steps if step.status == StepStatus.COMPLETED)
+        if completed_count == 0:
+            return None
+        
+        total_duration = self.get_total_duration()
+        avg_step_duration = total_duration / completed_count
+        remaining_steps = self.total_steps - completed_count
+        
+        if remaining_steps <= 0:
+            return "Completed"
+        
+        estimated_remaining_ms = avg_step_duration * remaining_steps
+        estimated_completion = datetime.now().timestamp() + (estimated_remaining_ms / 1000)
+        
+        return datetime.fromtimestamp(estimated_completion).isoformat()
 
 # Global storage for active workflows
 active_workflows: Dict[str, WorkflowTracker] = {}

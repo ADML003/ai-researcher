@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useUser, useAuth } from "./providers";
+import { useAuth as useClerkAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/ui/Sidebar";
 import Header from "@/components/ui/Header";
 import HeroSection from "@/components/ui/HeroSection";
@@ -56,7 +59,10 @@ interface ResearchData {
   };
 }
 
-export default function Home() {
+function HomeContent() {
+  const user = useUser();
+  const { getToken } = useClerkAuth();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [researchQuestion, setResearchQuestion] = useState("");
   const [targetDemographic, setTargetDemographic] = useState("");
@@ -66,7 +72,23 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    // If no user and not mounted yet, redirect to signin
+    if (mounted && !user) {
+      router.push("/auth/signin");
+    }
+  }, [user, mounted, router]);
+
+  // Show loading while mounting or if no user
+  if (!mounted || !user) {
+    return (
+      <div className="min-h-screen gradient-bg-mesh flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-4" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (formData: {
     research_question: string;
@@ -79,15 +101,25 @@ export default function Home() {
     setResults(null);
 
     try {
+      // Get the authentication token
+      const token = await getToken();
+
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      // Add authorization header if token exists
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
       const response = await fetch(
         `${
           process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
         }/research`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers,
           body: JSON.stringify(formData),
         }
       );
@@ -134,7 +166,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 gradient-bg-mesh transition-colors duration-300">
       {/* Sidebar */}
       <Sidebar />
 
@@ -142,7 +174,7 @@ export default function Home() {
       <Header />
 
       {/* Main Content */}
-      <main className="ml-64 px-6 py-8">
+      <main className="ml-64 px-6 py-4">
         <div className="max-w-7xl mx-auto">
           {!results ? (
             /* Research Setup */
@@ -394,5 +426,22 @@ export default function Home() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen gradient-bg-mesh flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-4" />
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }

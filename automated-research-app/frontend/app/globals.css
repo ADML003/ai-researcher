@@ -10,6 +10,64 @@
 
   body {
     @apply transition-colors duration-300;
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #f0fdfa 100%);
+  }
+
+  /* Perplexity-style gradient backgrounds */
+  .gradient-bg-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+  }
+
+  .gradient-bg-secondary {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%);
+  }
+
+  .gradient-bg-subtle {
+    background: linear-gradient(
+      135deg,
+      #f0f9ff 0%,
+      #e0f2fe 25%,
+      #f0fdfa 75%,
+      #ecfdf5 100%
+    );
+  }
+
+  .gradient-bg-mesh {
+    background: radial-gradient(
+        ellipse at top left,
+        rgba(59, 130, 246, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at top right,
+        rgba(6, 182, 212, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at bottom left,
+        rgba(16, 185, 129, 0.15) 0%,
+        transparent 50%
+      ),
+      linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  }
+
+  .dark .gradient-bg-mesh {
+    background: radial-gradient(
+        ellipse at top left,
+        rgba(59, 130, 246, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at top right,
+        rgba(6, 182, 212, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at bottom left,
+        rgba(16, 185, 129, 0.1) 0%,
+        transparent 50%
+      ),
+      linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   }
 
   /* Custom scrollbar */
@@ -42,6 +100,31 @@
 
   .nav-item-badge {
     @apply px-2 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full;
+  }
+
+  /* Hero Text Styling */
+  .hero-title {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .hero-title {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-gradient-text {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+  }
+
+  .dark .hero-gradient-text {
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.4));
   }
 
   /* Enhanced Cards */

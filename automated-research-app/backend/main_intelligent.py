@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 import os
@@ -10,10 +11,11 @@ import random
 from datetime import datetime
 from langsmith import Client, traceable
 from database import get_db_connection, init_database
-from workflow_tracker import create_workflow, get_workflow, WorkflowTracker
+import jwt
+import requests
 
 # Load environment variables
-load_dotenv(dotenv_path="../.env")
+load_dotenv()  # This will look for .env in the current directory
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -51,17 +53,95 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://localhost:3001", 
+        "http://localhost:3002",  # Added for new frontend port
+        "http://127.0.0.1:3000", 
+        "http://127.0.0.1:3001",
+        "http://127.0.0.1:3002"   # Added for new frontend port
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Authentication setup
+security = HTTPBearer()
+
+def get_clerk_public_key():
+    """Get Clerk public key for JWT verification"""
+    clerk_publishable_key = os.getenv("CLERK_PUBLISHABLE_KEY", "pk_test_bW92aW5nLXJhY2Nvb24tNzEuY2xlcmsuYWNjb3VudHMuZGV2JA")
+    # Extract instance ID from publishable key
+    instance_id = clerk_publishable_key.split("_")[2] if "_" in clerk_publishable_key else ""
+    
+    try:
+        # Fetch JWKS from Clerk
+        jwks_url = f"https://{instance_id}.clerk.accounts.dev/.well-known/jwks.json"
+        response = requests.get(jwks_url)
+        if response.status_code == 200:
+            return response.json()
+    except Exception as e:
+        logger.warning(f"Could not fetch Clerk JWKS: {e}")
+    
+    return None
+
+def verify_clerk_token(token: str) -> Optional[Dict]:
+    """Verify Clerk JWT token"""
+    try:
+        # For development, we'll do basic validation
+        # In production, you should verify with Clerk's public keys
+        decoded = jwt.decode(token, options={"verify_signature": False})
+        return decoded
+    except Exception as e:
+        logger.error(f"Token verification failed: {e}")
+        return None
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Optional[Dict]:
+    """Extract user from JWT token"""
+    try:
+        if not credentials:
+            return None
+        
+        token = credentials.credentials
+        user_data = verify_clerk_token(token)
+        
+        if user_data:
+            return {
+                "user_id": user_data.get("sub"),
+                "email": user_data.get("email"),
+                "name": user_data.get("name")
+            }
+    except Exception as e:
+        logger.error(f"Authentication error: {e}")
+    
+    return None
+
+def get_current_user_optional(authorization: Optional[str] = Header(None)) -> Optional[Dict]:
+    """Get current user without requiring authentication (for guest mode)"""
+    try:
+        if not authorization or not authorization.startswith("Bearer "):
+            return None
+        
+        token = authorization.replace("Bearer ", "")
+        user_data = verify_clerk_token(token)
+        
+        if user_data:
+            return {
+                "user_id": user_data.get("sub"),
+                "email": user_data.get("email"),
+                "name": user_data.get("name")
+            }
+    except Exception as e:
+        logger.error(f"Optional authentication error: {e}")
+    
+    return None
+
 class ResearchRequest(BaseModel):
     research_question: str
     target_demographic: str
-    num_interviews: Optional[int] = 10
-    num_questions: Optional[int] = 5
+    num_interviews: Optional[int] = 3  # Reduced from 10 to 3 for faster processing
+    num_questions: Optional[int] = 3   # Reduced from 5 to 3 for faster processing
 
 class ResearchResponse(BaseModel):
     success: bool
@@ -101,7 +181,7 @@ def ask_cerebras_ai(prompt: str) -> str:
             "https://api.cerebras.ai/v1/chat/completions", 
             headers=headers, 
             json=payload,
-            timeout=30
+            timeout=10  # Reduced from 30 to 10 seconds
         )
         
         if response.status_code == 200:
@@ -146,28 +226,33 @@ def generate_intelligent_mock_response(prompt: str) -> str:
     else:
         return "I understand your request and will provide relevant insights based on the research context."
 
-def store_research_session(session_id: str, request: 'ResearchRequest', result: dict):
+def store_research_session(session_id: str, request: 'ResearchRequest', result: dict, user_context: dict = None):
     """Store research session in database for dashboard"""
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             
+            # Get user_id from context
+            user_id = user_context.get("user_id") if user_context else "guest"
+            
             # Store main session
             cursor.execute('''
                 INSERT INTO research_sessions 
-                (session_id, research_question, target_demographic, num_interviews, synthesis)
-                VALUES (%s, %s, %s, %s, %s)
+                (session_id, research_question, target_demographic, num_interviews, synthesis, user_id)
+                VALUES (%s, %s, %s, %s, %s, %s)
                 ON CONFLICT (session_id) DO UPDATE SET
                     research_question = EXCLUDED.research_question,
                     target_demographic = EXCLUDED.target_demographic,
                     num_interviews = EXCLUDED.num_interviews,
-                    synthesis = EXCLUDED.synthesis
+                    synthesis = EXCLUDED.synthesis,
+                    user_id = EXCLUDED.user_id
             ''', (
                 session_id,
                 request.research_question,
                 request.target_demographic,
                 request.num_interviews,
-                result.get('synthesis', '')
+                result.get('synthesis', ''),
+                user_id
             ))
             
             # Store personas
@@ -898,55 +983,170 @@ async def health_check():
     }
 
 @app.get("/dashboard/stats")
-async def get_dashboard_stats():
-    """Get dashboard statistics"""
+async def get_dashboard_stats(current_user: Optional[Dict] = Depends(get_current_user_optional)):
+    """Get comprehensive dashboard statistics with accurate metrics"""
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
         
+            # Filter by user if authenticated, show all if guest
+            user_filter = ""
+            params = []
+            if current_user and current_user.get("user_id") != "guest":
+                user_filter = " WHERE user_id = %s"
+                params = [current_user.get("user_id")]
+        
             # Get total research sessions
-            cursor.execute("SELECT COUNT(*) FROM research_sessions")
-            total_sessions = cursor.fetchone()[0]
+            query = f"SELECT COUNT(*) as count FROM research_sessions{user_filter}"
+            cursor.execute(query, params)
+            result = cursor.fetchone()
+            total_sessions = result["count"] if result else 0
         
             # Get total personas generated
-            cursor.execute("SELECT COUNT(*) FROM personas")
-            total_personas = cursor.fetchone()[0]
+            cursor.execute("SELECT COUNT(*) as count FROM personas")
+            result = cursor.fetchone()
+            total_personas = result["count"] if result else 0
             
             # Get total interviews conducted
-            cursor.execute("SELECT COUNT(DISTINCT session_id || persona_name) FROM interviews")
-            total_interviews = cursor.fetchone()[0]
+            cursor.execute("SELECT COUNT(*) as count FROM interviews")
+            result = cursor.fetchone()
+            total_interviews = result["count"] if result else 0
             
-            # Get recent sessions
+            # Get sessions by status
             cursor.execute("""
-                SELECT research_question, target_demographic, created_at, status
+                SELECT status, COUNT(*) as count
+                FROM research_sessions 
+                GROUP BY status
+            """)
+            status_rows = cursor.fetchall()
+            status_counts = {row["status"]: row["count"] for row in status_rows} if status_rows else {}
+            
+            # Calculate status metrics
+            completed_sessions = status_counts.get('completed', 0)
+            failed_sessions = status_counts.get('failed', 0)
+            running_sessions = status_counts.get('running', 0)
+            
+            # Get average completion time for completed sessions - using default since no updated_at field
+            avg_completion_time = 0  # Cannot calculate without updated_at field in database
+            
+            # Get sessions created today
+            cursor.execute("""
+                SELECT COUNT(*) as count
+                FROM research_sessions 
+                WHERE created_at::date = CURRENT_DATE
+            """)
+            result = cursor.fetchone()
+            sessions_today = result["count"] if result else 0
+            
+            # Get sessions created this week
+            cursor.execute("""
+                SELECT COUNT(*) as count
+                FROM research_sessions 
+                WHERE created_at >= date_trunc('week', CURRENT_DATE)
+            """)
+            result = cursor.fetchone()
+            sessions_this_week = result["count"] if result else 0
+            
+            # Get recent sessions with enhanced data
+            cursor.execute("""
+                SELECT session_id, research_question, target_demographic, created_at, status, 
+                       CASE WHEN synthesis IS NOT NULL AND LENGTH(synthesis) > 0 THEN true ELSE false END as has_results
                 FROM research_sessions 
                 ORDER BY created_at DESC 
-                LIMIT 5
+                LIMIT 10
             """)
+            recent_rows = cursor.fetchall()
             recent_sessions = [
                 {
-                    "research_question": row[0],
-                    "target_demographic": row[1],
-                    "created_at": row[2],
-                    "status": row[3]
+                    "session_id": row["session_id"],
+                    "research_question": row["research_question"],
+                    "target_demographic": row["target_demographic"],
+                    "created_at": row["created_at"].isoformat() if hasattr(row["created_at"], 'isoformat') else str(row["created_at"]),
+                    "status": row["status"],
+                    "has_results": row["has_results"]
                 }
-                for row in cursor.fetchall()
-            ]
+                for row in recent_rows
+            ] if recent_rows else []
+            
+            # Calculate success rate
+            success_rate = (completed_sessions / total_sessions * 100) if total_sessions > 0 else 0
             
             return {
-                "total_sessions": total_sessions,
-                "total_personas": total_personas,
-                "total_interviews": total_interviews,
+                "overview": {
+                    "total_sessions": total_sessions,
+                    "total_personas": total_personas,
+                    "total_interviews": total_interviews,
+                    "active_workflows": 0,
+                    "success_rate": round(success_rate, 1),
+                    "avg_completion_time": round(avg_completion_time, 2)
+                },
+                "status_breakdown": {
+                    "completed": completed_sessions,
+                    "failed": failed_sessions,
+                    "running": running_sessions,
+                    "active": 0
+                },
+                "time_metrics": {
+                    "sessions_today": sessions_today,
+                    "sessions_this_week": sessions_this_week,
+                    "avg_completion_time_minutes": round(avg_completion_time / 60, 1) if avg_completion_time > 0 else 0
+                },
                 "recent_sessions": recent_sessions
             }
         
     except Exception as e:
-        logger.error(f"Failed to get dashboard stats: {e}")
+        logger.error(f"Failed to get dashboard stats: {str(e)}")
         return {
-            "total_sessions": 0,
-            "total_personas": 0,
-            "total_interviews": 0,
+            "overview": {
+                "total_sessions": 0,
+                "total_personas": 0,
+                "total_interviews": 0,
+                "active_workflows": 0,
+                "success_rate": 0,
+                "avg_completion_time": 0
+            },
+            "status_breakdown": {
+                "completed": 0,
+                "failed": 0,
+                "running": 0,
+                "active": 0
+            },
+            "time_metrics": {
+                "sessions_today": 0,
+                "sessions_this_week": 0,
+                "avg_completion_time_minutes": 0
+            },
             "recent_sessions": []
+        }
+
+@app.get("/debug/db")
+async def debug_database():
+    """Debug endpoint to test database queries"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            
+            # Test basic count
+            cursor.execute("SELECT COUNT(*) as count FROM research_sessions")
+            result = cursor.fetchone()
+            session_count = result["count"] if result else 0
+            
+            # Test status breakdown  
+            cursor.execute("SELECT status, COUNT(*) as count FROM research_sessions GROUP BY status")
+            status_rows = cursor.fetchall()
+            status_data = {row["status"]: row["count"] for row in status_rows} if status_rows else {}
+            
+            return {
+                "success": True,
+                "session_count": session_count,
+                "status_breakdown": status_data,
+                "tables_exist": True
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "session_count": 0
         }
 
 @app.get("/dashboard/sessions")
@@ -1143,28 +1343,143 @@ async def get_research_details(session_id: str):
         logger.error(f"Failed to get research details: {e}")
         raise HTTPException(status_code=500, detail="Failed to retrieve research details")
 
+@app.get("/interviews")
+async def get_all_interviews():
+    """Get optimized interviews data for fast loading"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            
+            # Single optimized query with joins for all interview data
+            cursor.execute("""
+                SELECT 
+                    rs.session_id,
+                    rs.research_question,
+                    rs.target_demographic,
+                    rs.created_at,
+                    rs.status,
+                    COUNT(DISTINCT p.id) as persona_count,
+                    COUNT(DISTINCT i.id) as interview_count
+                FROM research_sessions rs
+                LEFT JOIN personas p ON rs.session_id = p.session_id
+                LEFT JOIN interviews i ON rs.session_id = i.session_id
+                WHERE rs.status = 'completed'
+                GROUP BY rs.session_id, rs.research_question, rs.target_demographic, rs.created_at, rs.status
+                ORDER BY rs.created_at DESC
+                LIMIT 50
+            """)
+            
+            interviews_summary = []
+            for row in cursor.fetchall():
+                interviews_summary.append({
+                    "session_id": row["session_id"],
+                    "research_question": row["research_question"],
+                    "target_demographic": row["target_demographic"],
+                    "created_at": row["created_at"].isoformat() if row["created_at"] else None,
+                    "status": row["status"],
+                    "persona_count": row["persona_count"] or 0,
+                    "interview_count": row["interview_count"] or 0
+                })
+            
+            return {
+                "success": True,
+                "data": interviews_summary,
+                "total_count": len(interviews_summary)
+            }
+        
+    except Exception as e:
+        logger.error(f"Failed to get interviews: {str(e)}")
+        return {
+            "success": False,
+            "error": "Failed to retrieve interviews",
+            "data": [],
+            "total_count": 0
+        }
+
+@app.get("/reports")
+async def get_all_reports():
+    """Get optimized reports data for fast loading"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            
+            # Single optimized query for completed research sessions with synthesis
+            cursor.execute("""
+                SELECT 
+                    session_id,
+                    research_question,
+                    target_demographic,
+                    created_at,
+                    status,
+                    CASE WHEN LENGTH(synthesis) > 100 THEN SUBSTR(synthesis, 1, 100) || '...' 
+                         ELSE synthesis END as synthesis_preview,
+                    LENGTH(synthesis) as synthesis_length
+                FROM research_sessions 
+                WHERE status = 'completed' AND synthesis IS NOT NULL
+                ORDER BY created_at DESC
+                LIMIT 50
+            """)
+            
+            reports_summary = []
+            for row in cursor.fetchall():
+                # Default duration since updated_at doesn't exist in database
+                duration_minutes = 0
+                
+                reports_summary.append({
+                    "session_id": row["session_id"],
+                    "research_question": row["research_question"],
+                    "target_demographic": row["target_demographic"],
+                    "created_at": row["created_at"].isoformat() if row["created_at"] else None,
+                    "status": row["status"],
+                    "synthesis_preview": row["synthesis_preview"],
+                    "synthesis_length": row["synthesis_length"] or 0,
+                    "duration_minutes": duration_minutes
+                })
+            
+            return {
+                "success": True,
+                "data": reports_summary,
+                "total_count": len(reports_summary)
+            }
+        
+    except Exception as e:
+        logger.error(f"Failed to get reports: {str(e)}")
+        return {
+            "success": False,
+            "error": "Failed to retrieve reports",
+            "data": [],
+            "total_count": 0
+        }
+
 @app.post("/research", response_model=ResearchResponse)
 @traceable(name="research_workflow")
-async def conduct_research(request: ResearchRequest):
+async def conduct_research(request: ResearchRequest, current_user: Optional[Dict] = Depends(get_current_user_optional)):
     """
     Conduct intelligent automated user research with real-time workflow tracking
     """
     session_id = f"research_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(request.research_question) % 10000}"
     
-    # Create workflow tracker
-    workflow = create_workflow(session_id, request.research_question)
-    
     try:
+        # Log user information for research session
+        if current_user:
+            logger.info(f"Authenticated user research - User ID: {current_user.get('user_id')}")
+            user_context = {
+                "user_id": current_user.get("user_id"),
+                "email": current_user.get("email"),
+                "session_type": "authenticated"
+            }
+        else:
+            logger.info("Guest user research session")
+            user_context = {
+                "user_id": "guest",
+                "session_type": "guest"
+            }
+        
         logger.info(f"Starting intelligent research for: {request.research_question}")
         logger.info(f"Target demographic: {request.target_demographic}")
         logger.info(f"Session ID: {session_id}")
         
-        # Start workflow tracking
-        workflow.start_step("step_1", {
-            "research_question": request.research_question,
-            "target_demographic": request.target_demographic,
-            "num_interviews": request.num_interviews
-        })
+        # Initialize research session
         
         # LangSmith tracing metadata
         if langsmith_client:
@@ -1177,18 +1492,14 @@ async def conduct_research(request: ResearchRequest):
         
         # Validate inputs
         if not request.research_question.strip():
-            workflow.fail_step("step_1", "Research question cannot be empty")
             raise HTTPException(status_code=400, detail="Research question cannot be empty")
         
         if not request.target_demographic.strip():
-            workflow.fail_step("step_1", "Target demographic cannot be empty")
             raise HTTPException(status_code=400, detail="Target demographic cannot be empty")
         
-        workflow.complete_step("step_1")
         
         # Step 1: Generate intelligent interview questions
-        workflow.start_step("step_3")
-        workflow.start_step("step_3_1")
+        logger.info("Step 1: Generating interview questions...")
         question_prompt = f"""Generate exactly {request.num_questions} high-quality, in-depth interview questions about: {request.research_question}
 
 Requirements:
@@ -1207,6 +1518,7 @@ Format: Provide each question on a separate line, numbered.
 Make each question comprehensive and specific to generate rich, detailed responses."""
         
         questions_response = ask_cerebras_ai(question_prompt)
+        logger.info(f"Questions generated: {len(questions_response)} characters")
         
         # Parse and validate questions
         raw_questions = [q.strip() for q in questions_response.split('\n') if q.strip()]
@@ -1225,16 +1537,8 @@ Make each question comprehensive and specific to generate rich, detailed respons
         else:
             questions = valid_questions[:request.num_questions]
         
-        workflow.complete_step("step_3_1")
-        workflow.start_step("step_3_2", {"num_questions": len(questions)})
-        workflow.complete_step("step_3_2")
-        workflow.complete_step("step_3")
         
         # Step 2: Generate intelligent personas
-        workflow.start_step("step_2")
-        workflow.start_step("step_2_1")
-        workflow.complete_step("step_2_1")
-        workflow.start_step("step_2_2")
         
         persona_prompt = f"""Generate exactly {request.num_interviews} unique personas for interviews about {request.research_question}.
 
@@ -1271,24 +1575,16 @@ Respond in JSON format with a "personas" array."""
             logger.error(f"Unexpected error in persona generation: {e}")
             personas = []
         
-        workflow.complete_step("step_2_2", {"num_personas": len(personas)})
-        workflow.start_step("step_2_3")
-        workflow.complete_step("step_2_3")
-        workflow.complete_step("step_2")
         
         # Step 3: Conduct intelligent interviews
-        workflow.start_step("step_4")
-        workflow.start_step("step_4_1")
+        logger.info(f"Step 3: Conducting {len(personas)} interviews with {len(questions)} questions each...")
         
         interviews = []
         for i, persona in enumerate(personas[:request.num_interviews]):
+            logger.info(f"Interviewing persona {i+1}/{len(personas[:request.num_interviews])}: {persona['name']}")
             interview_responses = []
             
-            # Update workflow progress
-            workflow.start_step("step_4_1", {
-                "current_persona": persona['name'],
-                "interview_progress": f"{i+1}/{min(len(personas), request.num_interviews)}"
-            })
+            # Process interview for persona
             
             for question in questions:
                 # Generate contextual response based on persona
@@ -1345,18 +1641,8 @@ Number of Interviews: {len(interviews)}
     for i, interview in enumerate(interviews)
 ])
         
-        workflow.complete_step("step_4_1")
-        workflow.start_step("step_4_2")
-        workflow.complete_step("step_4_2") 
-        workflow.complete_step("step_4")
         
         # Step 4: Data Analysis and Synthesis
-        workflow.start_step("step_5")
-        workflow.start_step("step_5_1")
-        workflow.complete_step("step_5_1")
-        workflow.start_step("step_5_2")
-        workflow.complete_step("step_5_2")
-        workflow.start_step("step_5_3")
         
         synthesis = ask_cerebras_ai(synthesis_prompt)
         
@@ -1364,16 +1650,8 @@ Number of Interviews: {len(interviews)}
         if not synthesis or len(synthesis.strip()) < 200 or "I understand your request" in synthesis:
             synthesis = generate_contextual_synthesis(request.research_question, request.target_demographic, interviews)
         
-        workflow.complete_step("step_5_3")
-        workflow.complete_step("step_5")
         
         # Step 5: Research Synthesis
-        workflow.start_step("step_6")
-        workflow.start_step("step_6_1")
-        workflow.complete_step("step_6_1")
-        workflow.start_step("step_6_2")
-        workflow.complete_step("step_6_2")
-        workflow.start_step("step_6_3")
         
         # Create detailed Q&A section
         detailed_qa = []
@@ -1418,93 +1696,25 @@ Number of Interviews: {len(interviews)}
             }
         }
         
-        workflow.complete_step("step_6_3")
-        workflow.complete_step("step_6")
         
         logger.info(f"Research completed successfully with {len(interviews)} interviews")
         
         # Step 6: Data Storage
-        workflow.start_step("step_7", {"session_id": session_id})
         
         # Store research session in database
-        store_research_session(session_id, request, result)
+        store_research_session(session_id, request, result, user_context)
         
-        workflow.complete_step("step_7")
         
         # Add session metadata
         result["session_id"] = session_id
         result["created_at"] = datetime.now().isoformat()
-        result["workflow_id"] = workflow.workflow_id
         
         return ResearchResponse(success=True, data=result)
         
     except Exception as e:
         logger.error(f"Research failed: {str(e)}")
-        # Mark current step as failed if workflow exists
-        if 'workflow' in locals():
-            current_step = workflow.get_current_step()
-            if current_step:
-                workflow.fail_step(current_step.id, str(e))
+        # Log error details
         return ResearchResponse(success=False, error=str(e))
-
-# Workflow Tracking Endpoints
-@app.get("/workflow/{session_id}")
-async def get_workflow_status(session_id: str):
-    """Get real-time workflow progress for a research session"""
-    try:
-        workflow = get_workflow(session_id)
-        if not workflow:
-            raise HTTPException(status_code=404, detail="Workflow not found")
-        
-        progress = workflow.get_progress()
-        return {
-            "success": True,
-            "data": progress
-        }
-    except Exception as e:
-        logger.error(f"Failed to get workflow status: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/workflow/{session_id}/steps")
-async def get_workflow_steps(session_id: str):
-    """Get detailed information about all workflow steps"""
-    try:
-        workflow = get_workflow(session_id)
-        if not workflow:
-            raise HTTPException(status_code=404, detail="Workflow not found")
-        
-        return {
-            "success": True,
-            "data": {
-                "workflow_id": workflow.workflow_id,
-                "session_id": session_id,
-                "research_question": workflow.research_question,
-                "steps": [step.dict() for step in workflow.steps]
-            }
-        }
-    except Exception as e:
-        logger.error(f"Failed to get workflow steps: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/workflow/{session_id}/current-step")
-async def get_current_workflow_step(session_id: str):
-    """Get the currently executing workflow step"""
-    try:
-        workflow = get_workflow(session_id)
-        if not workflow:
-            raise HTTPException(status_code=404, detail="Workflow not found")
-        
-        current_step = workflow.get_current_step()
-        return {
-            "success": True,
-            "data": {
-                "current_step": current_step.dict() if current_step else None,
-                "progress_percentage": workflow.get_progress()["progress_percentage"]
-            }
-        }
-    except Exception as e:
-        logger.error(f"Failed to get current workflow step: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn

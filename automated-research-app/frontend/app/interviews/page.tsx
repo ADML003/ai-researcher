@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 import {
   MessageSquare,
   Search,
@@ -45,6 +46,7 @@ interface GroupedInterview {
 
 export default function InterviewsPage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const [interviews, setInterviews] = useState<GroupedInterview[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,60 +63,51 @@ export default function InterviewsPage() {
 
   const fetchInterviews = async () => {
     try {
-      // First get all sessions
-      const sessionsResponse = await fetch(
-        "http://localhost:8000/dashboard/sessions"
-      );
-      const sessionsData = await sessionsResponse.json();
-      const sessions = sessionsData.sessions || [];
+      setLoading(true);
 
-      // Then get detailed data for each session
-      const detailedInterviews: GroupedInterview[] = [];
+      // Get authentication token
+      const token = await getToken();
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
 
-      for (const session of sessions) {
-        try {
-          const detailResponse = await fetch(
-            `http://localhost:8000/dashboard/session/${session.session_id}`
-          );
-          const detailData = await detailResponse.json();
-
-          if (detailData.interviews) {
-            const groupedInterview: GroupedInterview = {
-              session_id: session.session_id,
-              research_question: session.research_question,
-              target_demographic: session.target_demographic,
-              created_at: session.created_at,
-              personas: {},
-            };
-
-            // Group interviews by persona
-            Object.entries(detailData.interviews).forEach(
-              ([personaName, qaList]: [string, any[]]) => {
-                groupedInterview.personas[personaName] = {
-                  questions_and_answers: qaList
-                    .map((qa, index) => ({
-                      question: qa.question,
-                      answer: qa.answer,
-                      order: qa.order || index,
-                    }))
-                    .sort((a, b) => a.order - b.order),
-                };
-              }
-            );
-
-            detailedInterviews.push(groupedInterview);
-          }
-        } catch (error) {
-          console.error(
-            `Failed to fetch details for session ${session.session_id}:`,
-            error
-          );
-        }
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
       }
 
-      setInterviews(detailedInterviews);
+      // Use the optimized interviews endpoint instead of multiple API calls
+      const response = await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+        }/interviews`,
+        {
+          headers,
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Interviews loaded:", data.total_count); // Debug log
+
+        // Transform the optimized response into the expected format
+        const transformedInterviews: GroupedInterview[] = data.data.map(
+          (session: any) => ({
+            session_id: session.session_id,
+            research_question: session.research_question,
+            target_demographic: session.target_demographic,
+            created_at: session.created_at,
+            personas: {}, // Simplified structure for faster loading
+          })
+        );
+
+        setInterviews(transformedInterviews);
+      } else {
+        console.error("Failed to fetch interviews:", response.status);
+        setInterviews([]);
+      }
     } catch (error) {
-      console.error("Failed to fetch interviews:", error);
+      console.error("Error fetching interviews:", error);
+      setInterviews([]);
     } finally {
       setLoading(false);
     }

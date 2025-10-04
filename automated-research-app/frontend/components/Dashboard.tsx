@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 import {
   BarChart3,
   Users,
@@ -17,14 +18,32 @@ import {
 } from "lucide-react";
 
 interface DashboardStats {
-  total_sessions: number;
-  total_personas: number;
-  total_interviews: number;
+  overview: {
+    total_sessions: number;
+    total_personas: number;
+    total_interviews: number;
+    active_workflows: number;
+    success_rate: number;
+    avg_completion_time: number;
+  };
+  status_breakdown: {
+    completed: number;
+    failed: number;
+    running: number;
+    active: number;
+  };
+  time_metrics: {
+    sessions_today: number;
+    sessions_this_week: number;
+    avg_completion_time_minutes: number;
+  };
   recent_sessions: Array<{
+    session_id: string;
     research_question: string;
     target_demographic: string;
     created_at: string;
     status: string;
+    has_results: boolean;
   }>;
 }
 
@@ -39,6 +58,7 @@ interface ResearchSession {
 
 export default function Dashboard() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [sessions, setSessions] = useState<ResearchSession[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,8 +67,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchDashboardData();
-    // Refresh dashboard data every 30 seconds
-    const interval = setInterval(fetchDashboardData, 30000);
+    // Reduce auto-refresh to every 60 seconds instead of 30 to improve performance
+    const interval = setInterval(fetchDashboardData, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -61,70 +81,98 @@ export default function Dashboard() {
         setLoading(true);
       }
 
-      // Fetch stats with error handling
-      try {
-        const statsResponse = await fetch(
-          `${
-            process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-          }/dashboard/stats`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-        if (statsResponse.ok) {
-          const statsData = await statsResponse.json();
-          setStats(statsData);
-        } else {
-          console.warn("Stats endpoint returned:", statsResponse.status);
-          // Set default stats if API fails
-          setStats({
+      // Get authentication token
+      const token = await getToken();
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      // Fetch both stats and sessions in parallel for better performance
+      const [statsResponse, sessionsResponse] = await Promise.all([
+        fetch(`${baseUrl}/dashboard/stats`, {
+          method: "GET",
+          headers,
+        }),
+        fetch(`${baseUrl}/dashboard/sessions`, {
+          method: "GET",
+          headers,
+        }),
+      ]);
+
+      // Handle stats response
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
+        console.log("Dashboard stats loaded:", statsData.overview); // Debug log
+        setStats(statsData);
+      } else {
+        console.error(
+          "Stats API error:",
+          statsResponse.status,
+          statsResponse.statusText
+        );
+        setStats({
+          overview: {
             total_sessions: 0,
             total_personas: 0,
             total_interviews: 0,
-            recent_sessions: [],
-          });
-        }
-      } catch (error) {
-        console.warn("Stats fetch failed:", error);
-        setStats({
-          total_sessions: 0,
-          total_personas: 0,
-          total_interviews: 0,
+            active_workflows: 0,
+            success_rate: 0,
+            avg_completion_time: 0,
+          },
+          status_breakdown: { completed: 0, failed: 0, running: 0, active: 0 },
+          time_metrics: {
+            sessions_today: 0,
+            sessions_this_week: 0,
+            avg_completion_time_minutes: 0,
+          },
           recent_sessions: [],
         });
       }
 
-      // Fetch sessions with error handling
-      try {
-        const sessionsResponse = await fetch(
-          `${
-            process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-          }/dashboard/sessions`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+      // Handle sessions response
+      if (sessionsResponse.ok) {
+        const sessionsData = await sessionsResponse.json();
+        console.log(
+          "Dashboard sessions loaded:",
+          sessionsData.sessions?.length || 0
+        ); // Debug log
+        setSessions(sessionsData.sessions || []);
+      } else {
+        console.error(
+          "Sessions API error:",
+          sessionsResponse.status,
+          sessionsResponse.statusText
         );
-
-        if (sessionsResponse.ok) {
-          const sessionsData = await sessionsResponse.json();
-          setSessions(sessionsData.sessions || []);
-        } else {
-          console.warn("Sessions endpoint returned:", sessionsResponse.status);
-          setSessions([]);
-        }
-      } catch (error) {
-        console.warn("Sessions fetch failed:", error);
         setSessions([]);
       }
     } catch (error) {
       console.error("Failed to fetch dashboard data:", error);
+      // Set fallback data on error
+      setStats({
+        overview: {
+          total_sessions: 0,
+          total_personas: 0,
+          total_interviews: 0,
+          active_workflows: 0,
+          success_rate: 0,
+          avg_completion_time: 0,
+        },
+        status_breakdown: { completed: 0, failed: 0, running: 0, active: 0 },
+        time_metrics: {
+          sessions_today: 0,
+          sessions_this_week: 0,
+          avg_completion_time_minutes: 0,
+        },
+        recent_sessions: [],
+      });
+      setSessions([]);
     } finally {
       if (loading) {
         setLoading(false);
@@ -182,7 +230,7 @@ export default function Dashboard() {
                     Total Sessions
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {stats.total_sessions}
+                    {stats.overview.total_sessions}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
@@ -198,7 +246,7 @@ export default function Dashboard() {
                     Total Personas
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {stats.total_personas}
+                    {stats.overview.total_personas}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
@@ -214,7 +262,7 @@ export default function Dashboard() {
                     Total Interviews
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {stats.total_interviews}
+                    {stats.overview.total_interviews}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
@@ -230,7 +278,7 @@ export default function Dashboard() {
                     Success Rate
                   </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {stats.total_sessions > 0 ? "100%" : "0%"}
+                    {stats.overview.total_sessions > 0 ? "100%" : "0%"}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
