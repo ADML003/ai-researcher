@@ -47,33 +47,88 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchDashboardData();
+    // Refresh dashboard data every 30 seconds
+    const interval = setInterval(fetchDashboardData, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchDashboardData = async () => {
     try {
-      setLoading(true);
+      const isInitialLoad = loading;
+      if (!isInitialLoad) {
+        // Don't show loading for auto-refresh
+      } else {
+        setLoading(true);
+      }
 
-      // Fetch stats
-      const statsResponse = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-        }/dashboard/stats`
-      );
-      const statsData = await statsResponse.json();
-      setStats(statsData);
+      // Fetch stats with error handling
+      try {
+        const statsResponse = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+          }/dashboard/stats`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      // Fetch sessions
-      const sessionsResponse = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
-        }/dashboard/sessions`
-      );
-      const sessionsData = await sessionsResponse.json();
-      setSessions(sessionsData.sessions || []);
+        if (statsResponse.ok) {
+          const statsData = await statsResponse.json();
+          setStats(statsData);
+        } else {
+          console.warn("Stats endpoint returned:", statsResponse.status);
+          // Set default stats if API fails
+          setStats({
+            total_sessions: 0,
+            total_personas: 0,
+            total_interviews: 0,
+            recent_sessions: [],
+          });
+        }
+      } catch (error) {
+        console.warn("Stats fetch failed:", error);
+        setStats({
+          total_sessions: 0,
+          total_personas: 0,
+          total_interviews: 0,
+          recent_sessions: [],
+        });
+      }
+
+      // Fetch sessions with error handling
+      try {
+        const sessionsResponse = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+          }/dashboard/sessions`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (sessionsResponse.ok) {
+          const sessionsData = await sessionsResponse.json();
+          setSessions(sessionsData.sessions || []);
+        } else {
+          console.warn("Sessions endpoint returned:", sessionsResponse.status);
+          setSessions([]);
+        }
+      } catch (error) {
+        console.warn("Sessions fetch failed:", error);
+        setSessions([]);
+      }
     } catch (error) {
       console.error("Failed to fetch dashboard data:", error);
     } finally {
-      setLoading(false);
+      if (loading) {
+        setLoading(false);
+      }
     }
   };
 

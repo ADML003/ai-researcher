@@ -8,7 +8,7 @@ import logging
 import json
 import random
 from datetime import datetime
-from langsmith import Client
+from langsmith import Client, traceable
 from database import get_db_connection, init_database
 from workflow_tracker import create_workflow, get_workflow, WorkflowTracker
 
@@ -24,15 +24,17 @@ os.environ["LANGCHAIN_TRACING_V2"] = os.getenv("LANGCHAIN_TRACING_V2", "true")
 os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGCHAIN_PROJECT", "automated-research-app")
 os.environ["LANGCHAIN_ENDPOINT"] = os.getenv("LANGCHAIN_ENDPOINT", "https://api.smith.langchain.com")
 
-langsmith_api_key = os.getenv("LANGSMITH_API_KEY")
+# Try both LANGSMITH_API_KEY and LANGCHAIN_API_KEY for compatibility
+langsmith_api_key = os.getenv("LANGSMITH_API_KEY") or os.getenv("LANGCHAIN_API_KEY")
 if langsmith_api_key and langsmith_api_key != "your_langsmith_api_key_here":
     os.environ["LANGCHAIN_API_KEY"] = langsmith_api_key
     try:
         langsmith_client = Client()
         logger.info(f"LangSmith integration enabled with project: {os.environ['LANGCHAIN_PROJECT']}")
+        logger.info(f"LangSmith API Key configured: {langsmith_api_key[:20]}...")
     except Exception as e:
         langsmith_client = None
-        logger.warning(f"LangSmith client initialization failed: {e}")
+        logger.error(f"LangSmith client initialization failed: {e}")
 else:
     langsmith_client = None
     logger.warning("LangSmith API key not found or is placeholder. Tracing disabled.")
@@ -67,6 +69,7 @@ class ResearchResponse(BaseModel):
     error: Optional[str] = None
 
 # Cerebras AI interface (simplified)
+@traceable(name="cerebras_ai_call")
 def ask_cerebras_ai(prompt: str) -> str:
     """Simulate Cerebras AI responses with intelligent patterns"""
     try:
@@ -238,6 +241,7 @@ def extract_demographic(prompt: str) -> str:
     
     return "professionals"
 
+@traceable(name="generate_questions")
 def generate_clean_questions(research_question: str, demographic: str, num_questions: int) -> list:
     """Generate clean, properly formatted interview questions"""
     topic_lower = research_question.lower()
@@ -307,6 +311,7 @@ def generate_smart_questions(topic: str) -> str:
     # Return formatted questions
     return "\n".join(base_questions[:5])
 
+@traceable(name="generate_personas")
 def generate_smart_personas(demographic: str) -> str:
     """Generate demographic-appropriate personas - minimal format"""
     demographic_lower = demographic.lower()
@@ -483,6 +488,7 @@ def generate_smart_personas(demographic: str) -> str:
     
     return json.dumps({"personas": personas}, indent=2)
 
+@traceable(name="generate_interview_response")
 def generate_clean_interview_response(persona: dict, question: str) -> str:
     """Generate clean, natural interview responses based on persona and question"""
     name = persona.get('name', 'Participant')
@@ -786,6 +792,7 @@ Different stakeholder groups bring unique viewpoints based on their roles, exper
     
     return synthesis
 
+@traceable(name="generate_synthesis")
 def generate_contextual_synthesis(research_question: str, demographic: str, interviews: list) -> str:
     """Generate comprehensive analysis based on actual interview data"""
     
@@ -1137,6 +1144,7 @@ async def get_research_details(session_id: str):
         raise HTTPException(status_code=500, detail="Failed to retrieve research details")
 
 @app.post("/research", response_model=ResearchResponse)
+@traceable(name="research_workflow")
 async def conduct_research(request: ResearchRequest):
     """
     Conduct intelligent automated user research with real-time workflow tracking
