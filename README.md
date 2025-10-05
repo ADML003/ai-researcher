@@ -1,1 +1,1 @@
-Click on the ai-reseacher for the project code!
+Click on the automated-research-app for the project code!
