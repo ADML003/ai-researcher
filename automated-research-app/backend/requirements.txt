@@ -1,15 +1,22 @@
+# Core FastAPI dependencies
 fastapi==0.104.1
-uvicorn[standard]==0.24.0
+uvicorn==0.24.0
 pydantic==2.5.0
 python-dotenv==1.0.0
 python-multipart==0.0.6
-langchain>=0.2.0
-langgraph>=0.1.0
-langchain-openai>=0.1.0
+
+# Database
+psycopg2-binary==2.9.9
+
+# AI/LLM dependencies  
+langchain==0.2.16
+langchain-openai==0.1.23
 cerebras-cloud-sdk==1.0.0
-langchain-cerebras>=0.1.0
-langsmith>=0.1.0
-psycopg2-binary>=2.9.0
-PyJWT>=2.8.0
-cryptography>=41.0.0
-requests>=2.31.0
+langsmith==0.1.120
+
+# Authentication
+PyJWT==2.8.0
+cryptography==41.0.7
+
+# HTTP requests
+requests==2.31.0

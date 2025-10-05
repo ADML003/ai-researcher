@@ -50,6 +50,12 @@ app = FastAPI(
     version="2.0.0"
 )
 
+# Health check endpoint for Railway
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Railway deployment"""
+    return {"status": "healthy", "service": "research-api"}
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
