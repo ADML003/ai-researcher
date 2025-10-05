@@ -15,6 +15,8 @@ import {
   Activity,
   Clock,
   ExternalLink,
+  Trash2,
+  AlertTriangle,
 } from "lucide-react";
 
 interface DashboardStats {
@@ -64,6 +66,10 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedSession, setSelectedSession] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     fetchDashboardData();
@@ -182,6 +188,57 @@ export default function Dashboard() {
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
+  };
+
+  const handleDeleteSession = async (sessionId: string) => {
+    try {
+      setDeleteLoading(sessionId);
+
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const token = await getToken();
+
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${baseUrl}/research/${sessionId}`, {
+        method: "DELETE",
+        headers,
+      });
+
+      if (response.ok) {
+        // Remove session from local state
+        setSessions((prev) =>
+          prev.filter((session) => session.session_id !== sessionId)
+        );
+        // Refresh dashboard data to update stats
+        await fetchDashboardData();
+        console.log(`Successfully deleted session ${sessionId}`);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Delete failed:", errorData);
+        alert("Failed to delete research session. Please try again.");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete research session. Please try again.");
+    } finally {
+      setDeleteLoading(null);
+      setShowDeleteConfirm(null);
+    }
+  };
+
+  const confirmDelete = (sessionId: string) => {
+    setShowDeleteConfirm(sessionId);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(null);
   };
 
   const filteredSessions = sessions.filter(
@@ -314,13 +371,15 @@ export default function Dashboard() {
                 {filteredSessions.map((session) => (
                   <div
                     key={session.session_id}
-                    className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer group"
-                    onClick={() =>
-                      router.push(`/research/${session.session_id}`)
-                    }
+                    className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group"
                   >
                     <div className="flex items-start justify-between">
-                      <div className="flex-1">
+                      <div
+                        className="flex-1 cursor-pointer"
+                        onClick={() =>
+                          router.push(`/research/${session.session_id}`)
+                        }
+                      >
                         <div className="flex items-center gap-2">
                           <h3 className="font-medium text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             {session.research_question}
@@ -344,6 +403,25 @@ export default function Dashboard() {
                             {session.status}
                           </span>
                         </div>
+                      </div>
+
+                      {/* Delete Button */}
+                      <div className="ml-4 flex-shrink-0">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            confirmDelete(session.session_id);
+                          }}
+                          disabled={deleteLoading === session.session_id}
+                          className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          title="Delete research session"
+                        >
+                          {deleteLoading === session.session_id ? (
+                            <div className="w-4 h-4 border-2 border-gray-300 border-t-red-500 rounded-full animate-spin"></div>
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -430,6 +508,59 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Delete Research Session
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  This action cannot be undone
+                </p>
+              </div>
+            </div>
+
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Are you sure you want to delete this research session? This will
+              permanently remove all associated data including personas,
+              interviews, and analysis.
+            </p>
+
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={cancelDelete}
+                className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDeleteSession(showDeleteConfirm)}
+                disabled={deleteLoading === showDeleteConfirm}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {deleteLoading === showDeleteConfirm ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4" />
+                    Delete
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -5,102 +5,50 @@ INFO:database:Successfully applied database migration
 INFO:database:Successfully applied database migration
 INFO:database:Successfully applied database migration
 INFO:database:Database initialization completed successfully
-INFO:     Started server process [49645]
+INFO:     Started server process [57490]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     127.0.0.1:63005 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63009 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63015 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63017 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63015 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51462 - "GET /health HTTP/1.1" 200 OK
+ERROR:__main__:Token verification failed: Not enough segments
+INFO:     127.0.0.1:51464 - "GET /dashboard/sessions HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:51470 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51472 - "DELETE /research/test_session_123 HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:51475 - "OPTIONS /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51476 - "OPTIONS /dashboard/sessions HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63017 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51476 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51475 - "GET /dashboard/sessions HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63045 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63046 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51493 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51494 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51508 - "GET /dashboard/stats HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63077 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63078 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51511 - "GET /dashboard/sessions HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63100 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63102 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51531 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51532 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51539 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51546 - "OPTIONS /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51548 - "OPTIONS /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63100 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63105 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51548 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63121 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63122 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63141 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63143 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63158 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63159 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63177 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63178 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63226 - "OPTIONS /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63228 - "OPTIONS /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63226 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63228 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63235 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63236 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63235 - "OPTIONS /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63242 - "OPTIONS /interviews HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63239 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63244 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63242 - "GET /interviews HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63244 - "GET /interviews HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63244 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63242 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63242 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63244 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51546 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51556 - "GET /dashboard/stats HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63256 - "GET /interviews HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63242 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63258 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51559 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51565 - "GET /dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51561 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63244 - "GET /interviews HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63244 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63258 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63244 - "OPTIONS /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63270 - "OPTIONS /reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51556 - "GET /dashboard/sessions HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63267 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63258 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63244 - "GET /reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51561 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
 INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63267 - "GET /reports HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63267 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63258 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63267 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63272 - "GET /reports HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63281 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63258 - "GET /reports HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63289 - "GET /dashboard/sessions HTTP/1.1" 200 OK
-INFO:__main__:Authenticated user - User ID: user_33bCImoUDWLEFMlQavzz06beSr8
-INFO:     127.0.0.1:63258 - "GET /dashboard/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63292 - "GET /dashboard/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51588 - "GET /dashboard/session/research_20251004_202651_2860 HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [57490]

@@ -1496,6 +1496,62 @@ async def get_all_reports(current_user: Dict = Depends(get_current_user)):
             "total_count": 0
         }
 
+@app.delete("/research/{session_id}")
+async def delete_research_session(session_id: str, current_user: Dict = Depends(get_current_user)):
+    """Delete a research session and all associated data (user must own the session)"""
+    try:
+        user_id = current_user.get("user_id")
+        
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            
+            # First, verify the session exists and belongs to the user
+            cursor.execute("""
+                SELECT session_id FROM research_sessions 
+                WHERE session_id = %s AND user_id = %s
+            """, (session_id, user_id))
+            
+            session_row = cursor.fetchone()
+            if not session_row:
+                raise HTTPException(status_code=404, detail="Research session not found or access denied")
+            
+            # Delete associated interviews first (foreign key constraint)
+            cursor.execute("DELETE FROM interviews WHERE session_id = %s", (session_id,))
+            interviews_deleted = cursor.rowcount
+            
+            # Delete associated personas
+            cursor.execute("DELETE FROM personas WHERE session_id = %s", (session_id,))
+            personas_deleted = cursor.rowcount
+            
+            # Finally delete the research session
+            cursor.execute("DELETE FROM research_sessions WHERE session_id = %s AND user_id = %s", (session_id, user_id))
+            session_deleted = cursor.rowcount
+            
+            if session_deleted == 0:
+                raise HTTPException(status_code=404, detail="Research session not found")
+            
+            conn.commit()
+            
+            logger.info(f"Successfully deleted research session {session_id} for user {user_id}: "
+                       f"{interviews_deleted} interviews, {personas_deleted} personas, {session_deleted} session")
+            
+            return {
+                "success": True,
+                "message": "Research session deleted successfully",
+                "deleted": {
+                    "session_id": session_id,
+                    "interviews": interviews_deleted,
+                    "personas": personas_deleted,
+                    "session": session_deleted
+                }
+            }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete research session {session_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to delete research session")
+
 @app.post("/research", response_model=ResearchResponse)
 @traceable(name="research_workflow")
 async def conduct_research(request: ResearchRequest, current_user: Optional[Dict] = Depends(get_current_user_optional)):
