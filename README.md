@@ -186,24 +186,7 @@ The FastAPI backend provides comprehensive REST API:
 
 ---
 
-## 🌐 **Production Deployment**
 
-### **Vercel (Frontend)**
-
-1. Push to GitHub
-2. Connect to Vercel
-3. Add environment variables
-4. Deploy automatically
-
-### **Railway/Render (Backend)**
-
-1. Connect GitHub repository
-2. Configure environment variables
-3. Deploy with one click
-
-_See deployment guide for detailed instructions_
-
----
 
 ## 🤝 **Acknowledgments**
 
@@ -226,11 +209,6 @@ _See deployment guide for detailed instructions_
 
 ---
 
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 🤝 **Contributing**
 
@@ -244,16 +222,6 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ---
 
-## 📞 **Support**
-
-Need help? We're here for you!
-
-- 📚 Check our [Documentation](docs/)
-- 🐛 [Report Issues](https://github.com/your-username/ai-user-research-platform/issues)
-- 💬 [Join Discussions](https://github.com/your-username/ai-user-research-platform/discussions)
-- 📧 Contact: support@yourplatform.com
-
----
 
 <div align="center">
 
