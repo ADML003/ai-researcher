@@ -1,252 +1,264 @@
-# Automated Research App
+# 🔬 AI User Research Platform
 
-An intelligent AI-powered user research system that generates user personas, conducts interviews, and synthesizes insights with professional formatting. Built with FastAPI backend and Next.js frontend featuring a comprehensive dashboard with research history storage.
+<div align="center">
 
-## Features
+![AI Research](https://img.shields.io/badge/AI-Research-blue.svg)
+![Next.js](https://img.shields.io/badge/Next.js-15.x-black.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC.svg)
 
-- 🧠 **Intelligent AI Research**: Advanced user persona generation and interviews with professional formatting
-- 📊 **Comprehensive Dashboard**: Complete research history tracking with SQLite storage
-- 🎯 **Professional Analysis**: Clean, readable research outputs without excessive formatting
-- 💾 **Local Database Storage**: SQLite-based persistence for all research sessions
-- 🔍 **LangSmith Integration**: Optional workflow monitoring and tracing
-- 🎨 **Apple-Inspired Design**: Clean, minimalist UI with light/dark mode
-- ⚡ **Fast Results**: Complete research insights in under 60 seconds
-- 🔄 **Real-time Processing**: Live updates during research workflow
+**🚀 An intelligent AI-powered user research system that generates user personas, conducts interviews, and synthesizes insights with professional-grade analysis.**
 
-### Backend
+_Built with Next.js 15, FastAPI, and powered by Cerebras AI for lightning-fast inference_
 
-- **FastAPI**: Modern, fast web framework with intelligent research endpoints
-- **SQLite**: Local database for research history and session storage
-- **LangChain**: LLM orchestration and tooling
-- **LangGraph**: Multi-agent workflow management
-- **Cerebras**: Ultra-fast LLM inference
-- **LangSmith**: Optional tracing and workflow monitoring
+</div>
 
-### Frontend
+---
 
-- **Next.js 14**: React framework with App Router
-- **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first styling with professional research formatting
-- **Lucide React**: Beautiful icons
-- **Dashboard**: Comprehensive research analytics and history interface
+## ✨ **Features**
 
-## Prerequisites
+### 🎯 **Core Capabilities**
 
-- Python 3.8+
-- Node.js 18+
-- npm or yarn
-- Cerebras API key
-- LangSmith API key (optional, for monitoring)
+- 🧠 **Intelligent AI Research**: Advanced persona generation with contextual interviews
+- 📊 **Comprehensive Dashboard**: Complete research history with delete functionality
+- � **Professional Analysis**: Clean, readable insights without formatting clutter
+- 💾 **PostgreSQL Storage**: Robust data persistence with user isolation
+- 🔒 **Secure Authentication**: Clerk-powered user management
+- ⚡ **Lightning Fast**: Complete research insights in under 60 seconds
+- � **Real-time Processing**: Live progress updates during workflow
 
-## Quick Start
+### 🛠️ **Technical Excellence**
 
-### Option 1: One-Command Start
+- 🌐 **Production Ready**: Optimized for Vercel deployment
+- 📱 **Responsive Design**: Apple-inspired UI with dark/light mode
+- 🔍 **LangSmith Integration**: Comprehensive workflow monitoring
+- 🗑️ **CRUD Operations**: Full research session management with confirmation dialogs
+- � **User Data Isolation**: Secure multi-tenant architecture
+
+---
+
+## 🏗️ **Tech Stack**
+
+### **Backend**
+
+- **🚀 FastAPI**: Modern, fast web framework with automatic API docs
+- **🐘 PostgreSQL**: Production-grade database with Neon hosting
+- **🦙 LangChain**: Advanced LLM orchestration and tooling
+- **📊 LangGraph**: Multi-agent workflow management
+- **⚡ Cerebras AI**: Ultra-fast LLM inference engine
+- **📈 LangSmith**: Workflow monitoring and tracing
+- **🔐 Clerk JWT**: Secure authentication validation
+
+### **Frontend**
+
+- **⚛️ Next.js 15**: React framework with App Router and TypeScript
+- **🎨 Tailwind CSS**: Utility-first styling with professional formatting
+- **🔐 Clerk**: Complete authentication solution
+- **🎭 Lucide React**: Beautiful, consistent iconography
+- **📊 Interactive Dashboard**: Research analytics and session management
+
+---
+
+## 🚀 **Quick Start**
+
+### **Prerequisites**
+
+- 🐍 Python 3.9+
+- 📦 Node.js 18+
+- 🔑 Cerebras API key
+- 🔑 Clerk authentication keys
+- 🔑 LangSmith API key (optional)
+
+### **1. Clone & Setup**
 
 ```bash
-./start.sh
+git clone https://github.com/your-username/ai-user-research-platform.git
+cd ai-user-research-platform
 ```
 
-The unified start script will:
+### **2. Environment Configuration**
 
-- ✅ Check environment and dependencies
-- 📦 Install required packages automatically
-- 🧠 Start intelligent backend with database
-- 🎨 Launch frontend with dashboard
-- 🔍 Configure LangSmith integration (if provided)
+Create `.env` files with your API keys:
 
-### Option 2: Manual Setup
-
-### 1. Environment Configuration
-
-Create `.env` file with your API keys:
+**Backend `.env`:**
 
 ```env
-# API Keys
-CEREBRAS_API_KEY=your_cerebras_api_key_here
-LANGSMITH_TRACING=your_langsmith_api_key_here
-
-# LangChain Configuration
+DATABASE_URL=your_postgresql_url
+CEREBRAS_API_KEY=your_cerebras_api_key
+LANGSMITH_API_KEY=your_langsmith_key
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=automated-research
-LANGCHAIN_API_KEY=your_langsmith_api_key_here
+LANGCHAIN_PROJECT=automated-research-app
+CLERK_PUBLISHABLE_KEY=pk_test_your_key
+```
 
-# Backend Configuration
-BACKEND_HOST=localhost
-BACKEND_PORT=8000
+**Frontend `.env.local`:**
 
-# Frontend Configuration
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_key
+CLERK_SECRET_KEY=sk_test_your_key
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/auth/signin
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/auth/signup
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
-### 3. Backend Setup
+### **3. Backend Setup**
 
 ```bash
 cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Start the backend server
-python main.py
+python main_intelligent.py
 ```
 
-The backend will be available at `http://localhost:8000`
+🌐 Backend runs at `http://localhost:8000`
 
-### 4. Frontend Setup
+### **4. Frontend Setup**
 
 ```bash
-cd frontend
-
-# Install dependencies
+# From root directory
 npm install
-
-# Start the development server
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:3000`
+🌐 Frontend runs at `http://localhost:3000`
 
-## Usage
+---
 
-1. **Open the App**: Navigate to `http://localhost:3000`
+## 🎯 **How to Use**
 
-2. **Enter Research Details**:
+### **Step 1: Authentication**
 
-   - Research Question: What you want to investigate
-   - Target Demographic: Who you want to interview
+- 🔐 Sign up or sign in using Clerk authentication
+- 🛡️ Your data is completely isolated and secure
 
-3. **Start Research**: Click "Start Research" to begin the automated workflow
+### **Step 2: Create Research**
 
-4. **View Results**:
-   - Generated personas
-   - Interview questions
-   - Complete interview transcripts
-   - Synthesized insights and recommendations
+- 📝 Enter your research question
+- 🎯 Define your target demographic
+- ⚙️ Customize interview parameters
 
-## API Documentation
+### **Step 3: AI Processing**
 
-The backend provides a REST API with the following endpoints:
+- 🧠 AI generates diverse user personas
+- 💬 Conducts contextual interviews
+- 📊 Synthesizes comprehensive insights
 
-- `GET /` - Health check
-- `GET /health` - Detailed health status
-- `POST /research` - Conduct automated research
-- `GET /config` - Get current configuration
+### **Step 4: Review & Manage**
 
-API documentation is available at `http://localhost:8000/docs` when the backend is running.
+- 📋 View detailed results in dashboard
+- 🔍 Access individual interview transcripts
+- 📈 Download professional reports
+- 🗑️ Delete sessions with confirmation
 
-## Configuration
+---
 
-### Default Settings
+## 📊 **Dashboard Features**
 
-- **Number of Interviews**: 10 personas
-- **Questions per Interview**: 5 questions
-- **Model**: Llama 3.3 70B via Cerebras
-- **Temperature**: 0.7 for creative responses
+### **Research Management**
 
-### Customization
+- 📈 **Statistics Overview**: Total sessions, personas, interviews
+- 📅 **Recent Activity**: Timeline of research sessions
+- 🔍 **Search & Filter**: Find specific research quickly
+- 🗑️ **Delete with Confirmation**: Secure session removal
 
-You can modify these settings in the `.env` file:
+### **Interview Analysis**
 
-```env
-DEFAULT_NUM_INTERVIEWS=10
-DEFAULT_NUM_QUESTIONS=5
-```
+- 👥 **Persona Breakdown**: Detailed character profiles
+- 💬 **Q&A Transcripts**: Complete interview records
+- 📊 **Synthesis Reports**: Professional insights and recommendations
 
-## Features Overview
+---
 
-### Multi-Agent Workflow
+## 🛠️ **API Documentation**
 
-1. **Configuration Node**: Generates interview questions
-2. **Persona Generation Node**: Creates diverse user profiles
-3. **Interview Node**: Conducts Q&A with each persona
-4. **Synthesis Node**: Analyzes and synthesizes insights
+The FastAPI backend provides comprehensive REST API:
 
-### Frontend Features
+- `GET /health` - System health check
+- `POST /research` - Create new research session
+- `GET /research/{session_id}` - Get research details
+- `DELETE /research/{session_id}` - Delete research session
+- `GET /dashboard/stats` - Dashboard statistics
+- `GET /interviews` - Get all interviews
 
-- **Responsive Design**: Works on desktop and mobile
-- **Dark/Light Mode**: Automatic theme detection with manual toggle
-- **Real-time Updates**: Live progress indicators
-- **Apple-inspired UI**: Clean, modern interface
-- **Detailed Results**: Expandable interview details
+📚 **Full API docs**: `http://localhost:8000/docs`
 
-## Development
+---
 
-### Backend Development
+## 🌐 **Production Deployment**
 
-```bash
-cd backend
-source venv/bin/activate
-python main.py
-```
+### **Vercel (Frontend)**
 
-### Frontend Development
+1. Push to GitHub
+2. Connect to Vercel
+3. Add environment variables
+4. Deploy automatically
 
-```bash
-cd frontend
-npm run dev
-```
+### **Railway/Render (Backend)**
 
-### Building for Production
+1. Connect GitHub repository
+2. Configure environment variables
+3. Deploy with one click
 
-#### Backend
+_See deployment guide for detailed instructions_
 
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000
-```
+---
 
-#### Frontend
+## 🤝 **Acknowledgments**
 
-```bash
-cd frontend
-npm run build
-npm start
-```
+### **Special Thanks**
 
-## Troubleshooting
+🚀 **[Cerebras AI](https://cerebras.ai)** - For providing ultra-fast LLM inference that makes real-time research generation possible. Their cutting-edge hardware acceleration enables our platform to deliver insights in under 60 seconds.
 
-### Common Issues
+🦙 **[LangChain](https://langchain.com)** - For the incredible LLM orchestration framework that powers our multi-agent research workflow. LangGraph makes complex AI workflows simple and reliable.
 
-1. **API Key Errors**: Ensure your Cerebras API key is valid and has sufficient credits
-2. **CORS Issues**: Make sure the frontend URL is in the CORS allowed origins
-3. **Import Errors**: Ensure all dependencies are installed correctly
+💻 **[WeMakeDevs](https://wemakedevs.org)** - For the amazing opportunity to build with Cerebras AI and showcase the future of AI-powered applications. Thank you for fostering innovation in the developer community!
 
-### Backend Logs
+### **Built With Love Using**
 
-The backend provides detailed logging. Check the console output for debugging information.
+- ⚛️ **Next.js** - The React framework for production
+- 🚀 **FastAPI** - Modern, fast web framework for building APIs
+- 🎨 **Tailwind CSS** - Utility-first CSS framework
+- 🔐 **Clerk** - Complete authentication solution
+- 🐘 **PostgreSQL** - Robust relational database
+- 📊 **Neon** - Modern serverless PostgreSQL
 
-### Frontend Errors
+---
 
-Check the browser developer console for any JavaScript errors or network issues.
+## 📄 **License**
 
-## Contributing
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+---
 
-## License
+## 🤝 **Contributing**
 
-This project is licensed under the MIT License. See LICENSE file for details.
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-## Support
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch
+3. ✨ Make your changes
+4. 🧪 Add tests if applicable
+5. 📥 Submit a pull request
 
-For issues and questions:
+---
 
-- Check the troubleshooting section
-- Review the API documentation
-- Open an issue on GitHub
+## 📞 **Support**
 
-## Acknowledgments
+Need help? We're here for you!
 
-- **Cerebras**: For ultra-fast LLM inference
-- **LangChain/LangGraph**: For LLM orchestration
-- **Next.js**: For the React framework
-- **Tailwind CSS**: For styling utilities
+- 📚 Check our [Documentation](docs/)
+- 🐛 [Report Issues](https://github.com/your-username/ai-user-research-platform/issues)
+- 💬 [Join Discussions](https://github.com/your-username/ai-user-research-platform/discussions)
+- 📧 Contact: support@yourplatform.com
+
+---
+
+<div align="center">
+
+**⭐ If you find this project helpful, please give it a star! ⭐**
+
+_Built with ❤️ by the AI Research Platform Team_
+
+</div>

@@ -6,6 +6,12 @@ const nextConfig = {
   },
   // Enable static exports for better deployment compatibility
   output: "standalone",
+  // Optimize for production
+  swcMinify: true,
+  // Enable experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
 module.exports = nextConfig;
